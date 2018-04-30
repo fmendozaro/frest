@@ -88,7 +88,6 @@ nav {
     height: 40px;
     background-color: #252831;
     text-align: center;
-    padding-top: 10px;
 }
 
 nav h1 {
@@ -99,7 +98,7 @@ nav h1 a {
     color: #fff;
     font-size: 14pt;
     font-weight: 200;
-    letter-spacing: 10px;
+    letter-spacing: 5px;
     text-transform: uppercase;
 }
 
@@ -335,6 +334,10 @@ nav h1 a {
 
 #restaurant-hours td {
     color: #666;
+}
+
+footer a{
+    padding: 0 5px;
 }
 
 /* Small devices (tablets, 768px and up) */
