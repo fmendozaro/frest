@@ -96,7 +96,7 @@ nav h1 {
 
 nav h1 a {
     color: #fff;
-    font-size: 14pt;
+    font-size: 11pt;
     font-weight: 200;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -146,7 +146,7 @@ nav h1 a {
 .filter-options {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     height: 30px;
     background-color: #3397DB;
     margin-bottom: 30px;
@@ -154,10 +154,10 @@ nav h1 a {
 
 .filter-options h2 {
     color: white;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: normal;
     line-height: 1;
-    margin: 0 10px;
+    margin: 0 5px;
     padding: 10px 0 0 0;
 }
 
@@ -165,13 +165,13 @@ nav h1 a {
     background-color: white;
     border: 1px solid #fff;
     font-family: Arial, sans-serif;
-    font-size: 10pt;
+    font-size: 7pt;
     height: 35px;
     letter-spacing: 0;
     margin: 10px 5px;
-    padding: 0 10px;
-    width: 150px;
-    box-shadow: 1px 1px 10px #000;
+    padding: 0 5px;
+    width: 110px;
+    box-shadow: 1px 5px 10px #000;
 }
 
 /* ====================== Restaurant Listing ====================== */
