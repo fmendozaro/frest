@@ -367,6 +367,15 @@ footer a{
         width: 200px;
         font-size: 11pt;
     }
+
+    #restaurants-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #restaurants-list li {
+        width: 270px;
+    }
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -396,6 +405,10 @@ footer a{
     .filter-options select {
         width: 300px;
         font-size: 11pt;
+    }
+
+    #restaurants-list li {
+        width: 220px;
     }
 }
 
