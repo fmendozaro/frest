@@ -233,15 +233,9 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Details ====================== */
-.inside header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
+
 
 .inside #map-container {
-    margin-top: 85px;
     background: blue none repeat scroll 0 0;
     height: 40vh;
     width: 100%;
@@ -284,9 +278,6 @@ nav h1 a {
 
 #restaurant-container, #reviews-container {
     order: 2;
-    border-bottom: 1px solid #d9d9d9;
-    border-top: 1px solid #fff;
-    width: 100%;
 }
 
 #restaurant-container img {
@@ -295,7 +286,6 @@ nav h1 a {
 
 #reviews-container {
     order: 3;
-    padding: 10px;
 }
 
 #reviews-container h2 {
@@ -318,7 +308,6 @@ nav h1 a {
     overflow: hidden;
     padding: 20px;
     position: relative;
-    width: 100%;
 }
 
 #reviews-list li p {
