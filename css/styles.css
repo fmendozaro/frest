@@ -78,7 +78,7 @@ header {
     width: 100%;
 }
 
-.responsive-img {
+.responsive-img, .restaurant-img {
     width: 100%;
     height: auto;
 }
@@ -250,10 +250,10 @@ nav h1 a {
 #restaurant-name {
     color: #f18200;
     font-family: Arial, sans-serif;
-    font-size: 20pt;
+    font-size: 13pt;
     font-weight: 200;
     letter-spacing: 0;
-    margin: 15px 0 30px;
+    margin: 15px;
     text-transform: uppercase;
     line-height: 1.1;
 }
@@ -269,19 +269,15 @@ nav h1 a {
     font-size: 12pt;
     font-weight: 300;
     letter-spacing: 10px;
-    margin: 0 0 20px;
+    margin: 0;
     padding: 2px 0;
     text-align: center;
     text-transform: uppercase;
-    width: 90%;
+    width: 100%;
 }
 
 #restaurant-container, #reviews-container {
     order: 2;
-}
-
-#restaurant-container img {
-    display: none;
 }
 
 #reviews-container {
