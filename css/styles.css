@@ -81,6 +81,7 @@ header {
 .responsive-img, .restaurant-img {
     width: 100%;
     height: auto;
+    align-self: center;
 }
 
 /* ====================== Navigation ====================== */
@@ -286,7 +287,7 @@ nav h1 a {
 
 #reviews-container h2 {
     color: #f58500;
-    font-size: 20pt;
+    font-size: 13pt;
     font-weight: 300;
     letter-spacing: -1px;
 }
@@ -302,12 +303,30 @@ nav h1 a {
     list-style-type: none;
     margin: 10px;
     overflow: hidden;
-    padding: 20px;
+    /*padding: 20px;*/
     position: relative;
+    border-radius: 35px 0;
 }
 
 #reviews-list li p {
-    margin: 10px;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+#reviews-list li p:nth-child(1) {
+    color: white;
+    margin: 0;
+    padding: 15px 30px;
+    background: #252831;
+}
+
+#review-date {
+    position: absolute;
+    right: 10px;
+}
+
+#restaurant-hours {
+    padding: 0 5px;
 }
 
 #restaurant-hours td {
