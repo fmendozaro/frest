@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="/img/favicon.ico">
     <title>Restaurant Reviews</title>
 </head>
 <body class="container">
@@ -41,6 +42,18 @@
 <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=  AIzaSyD4hyJWf3OUedW-G24gZwneEZci6ta5GGI &libraries=places&callback=initMap"></script>
-
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAo3sC8ESvx7xHmhD3-C670c8udWLWVKkw",
+        authDomain: "udacity-mws-1524959693928.firebaseapp.com",
+        databaseURL: "https://udacity-mws-1524959693928.firebaseio.com",
+        projectId: "udacity-mws-1524959693928",
+        storageBucket: "udacity-mws-1524959693928.appspot.com",
+        messagingSenderId: "486513648208"
+    };
+    firebase.initializeApp(config);
+</script>
 </body>
 </html>
