@@ -429,8 +429,13 @@ footer a{
         margin: 20px 0;
     }
 
+    #reviews-list p:nth-child(1) {
+        font-size: 14pt;
+    }
+
     #reviews-list p:nth-child(3) {
         padding: 10px 25px;
+        font-size: 12pt;
     }
 
 }
