@@ -384,6 +384,55 @@ footer a{
     #restaurants-list li {
         width: 270px;
     }
+
+    /* Inside */
+
+    #restaurant-name {
+        font-size: 20pt;
+    }
+
+    #restaurant-cuisine {
+        font-size: 18pt;
+    }
+
+    #restaurant-address {
+        width: 100%;
+        font-size: 15pt;
+        text-align: center;
+        align-self: center;
+    }
+
+    #restaurant-hours {
+        width: 80%;
+    }
+
+    #restaurant-hours td {
+        font-size: 12pt;
+        font-weight: bold;
+    }
+
+    #reviews-container {
+        margin-top: 20px;
+    }
+
+    #reviews-container h2 {
+        font-size: 20pt;
+        text-align: center;
+        width: 100%;
+    }
+
+    #reviews-list {
+        width: 80%;
+    }
+
+    #reviews-list li {
+        margin: 20px 0;
+    }
+
+    #reviews-list p:nth-child(3) {
+        padding: 10px 25px;
+    }
+
 }
 
 /* Medium devices (desktops, 992px and up) */
