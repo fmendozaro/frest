@@ -54,9 +54,9 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #footer {
     background-color: #444;
     color: #aaa;
-    font-size: 8pt;
+    font-size: 0.6rem;
     letter-spacing: 2px;
-    padding: 25px;
+    padding: 10px 25px;
     text-transform: uppercase;
 }
 
@@ -438,6 +438,10 @@ footer a{
         font-size: 12pt;
     }
 
+    #footer {
+        font-size: 0.8rem;
+    }
+
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -472,6 +476,47 @@ footer a{
     #restaurants-list li {
         width: 220px;
     }
+
+    #restaurant-container, #reviews-container {
+        width: 75%;
+        margin: 0 auto;
+    }
+
+    #restaurant-name {
+        font-size: 2rem;
+    }
+
+    #restaurant-hours {
+        width: 75%;
+    }
+
+    #restaurant-hours td {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    #reviews-container h2 {
+        font-size: 2.5rem;
+        margin-top: 20px;
+    }
+
+    #reviews-list li {
+        margin: 20px 0;
+    }
+
+    #reviews-list p:nth-child(1) {
+        font-size: 1rem;
+    }
+
+    #reviews-list p:nth-child(3) {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+
+    #footer {
+        font-size: 1rem;
+    }
+
 }
 
 /* Large devices (large desktops, 1200px and up) */
