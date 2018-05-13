@@ -1,8 +1,8 @@
 let restaurants,
     neighborhoods,
-    cuisines
-var map
-var markers = []
+    cuisines;
+var map;
+var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -175,5 +175,13 @@ addMarkersToMap = (restaurants = self.restaurants) => {
             window.location.href = marker.url
         });
         self.markers.push(marker);
+    });
+};
+
+if(navigator.serviceWorker){
+    navigator.serviceWorker.register('/js/sw.js').then(() => {
+        console.log('SW registred');
+    }).catch(() => {
+        console.log('SW failed');
     });
 }
