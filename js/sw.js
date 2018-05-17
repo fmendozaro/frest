@@ -2,13 +2,18 @@
 
 let staticCacheName = 'frest-v1';
 let contentImgsCache = 'frest-content-imgs';
-
+let allCaches = [
+  staticCacheName,
+  contentImgsCache
+];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(staticCacheName).then((cache) => {
             return cache.addAll([
+                '/',
                 '/img',
+                '/data/restaurants.json',
                 '/css/styles.css',
                 '/js/main.js',
                 '/js/restaurant_info.js'
@@ -40,6 +45,11 @@ self.addEventListener('fetch', (event) => {
         console.log(requestUrl.pathname);
         if (requestUrl.pathname.startsWith('/img/')) {
             event.respondWith(servePhoto(event.request));
+            return;
+        }
+
+        if (requestUrl.pathname.match('/')){
+            event.respondWith(caches.match('/'));
             return;
         }
     }
