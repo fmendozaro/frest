@@ -1,2 +1,5 @@
 *.iml
 .idea
+firebase.json
+firebase-debug.log
+package-lock.json
