@@ -2,7 +2,7 @@
 
 import idb from 'idb';
 
-let dbPromise = idb.open('test-db', 3, function (upgradeDb) {
+let dbPromise = idb.open('frest-db', 3, function (upgradeDb) {
     switch (upgradeDb.oldVersion) {
         case 0:
             let keyValStore = upgradeDb.createObjectStore('keyval');
@@ -88,3 +88,5 @@ dbPromise.then(function(db) {
 }).then(function(people) {
     console.log('Cat people:', people);
 });
+
+
