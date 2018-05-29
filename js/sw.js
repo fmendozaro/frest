@@ -19,7 +19,11 @@ self.addEventListener('install', event => {
                 '/restaurant.html',
                 '/data/restaurants.json',
                 '/css/styles.css',
-                '/js/main.js'
+                '/js/main.js',
+                '/vendor/sweetalert.min.js',
+                '/vendor/jquery-3.3.1.min.js',
+                '/vendor/toastr.min.css',
+                '/vendor/toastr.min.js'
             ]);
         })
     );
@@ -42,7 +46,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', event => {
-
+    console.log('fetched');
     let requestUrl = new URL(event.request.url);
 
     console.log(event);
@@ -74,6 +78,8 @@ self.addEventListener('fetch', event => {
 
     event.respondWith(
         caches.match(event.request).then( response => {
+
+            // toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
 
             if(response){
                 return response;
