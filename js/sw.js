@@ -79,7 +79,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request).then( response => {
 
-            // toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
+            toastr.error('Unable to connect');
 
             if(response){
                 return response;
