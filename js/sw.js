@@ -10,23 +10,23 @@ let allCaches = [
 ];
 
 self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(staticCacheName).then( cache => {
-            console.log('Opened cache');
-            return cache.addAll([
-                '/',
-                '/index.html',
-                '/restaurant.html',
-                '/data/restaurants.json',
-                '/css/styles.css',
-                '/js/main.js',
-                '/vendor/sweetalert.min.js',
-                '/vendor/jquery-3.3.1.min.js',
-                '/vendor/toastr.min.css',
-                '/vendor/toastr.min.js'
-            ]);
-        })
-    );
+
+    caches.open(staticCacheName).then( cache => {
+        console.log('Opened cache');
+        return cache.addAll([
+            '/',
+            '/index.html',
+            '/restaurant.html',
+            '/data/restaurants.json',
+            '/css/styles.css',
+            '/js/main.js',
+            '/vendor/sweetalert.min.js',
+            '/vendor/jquery-3.3.1.min.js',
+            '/vendor/toastr.min.css',
+            '/vendor/toastr.min.js'
+        ]);
+    })
+
 });
 
 self.addEventListener('activate', function (event) {
