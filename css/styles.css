@@ -3,7 +3,7 @@
 
 body, td, th, p {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
+    font-size: 1.1rem;
     color: #333;
     line-height: 1.5;
 }
@@ -16,7 +16,7 @@ body {
 
 ul, li {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
+    font-size: 1rem;
     color: #333;
 }
 
@@ -31,7 +31,7 @@ a:hover, a:focus {
 }
 
 a img {
-    border: none 0px #fff;
+    border: none 0 #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -54,7 +54,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #footer {
     background-color: #444;
     color: #aaa;
-    font-size: 0.6rem;
+    font-size: 1rem;
     letter-spacing: 2px;
     padding: 10px 25px;
     text-transform: uppercase;
@@ -98,7 +98,7 @@ nav h1 {
 
 nav h1 a {
     color: #fff;
-    font-size: 11pt;
+    font-size: 1rem;
     font-weight: 200;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -108,7 +108,7 @@ nav h1 a {
     padding: 10px 40px 16px;
     list-style: none;
     background-color: #eee;
-    font-size: 15px;
+    font-size: 1rem;
     margin: 0;
     width: 100%;
 }
@@ -156,7 +156,7 @@ nav h1 a {
 
 .filter-options h2 {
     color: white;
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: normal;
     line-height: 1;
     margin: 0 5px;
@@ -167,12 +167,12 @@ nav h1 a {
     background-color: white;
     border: 1px solid #fff;
     font-family: Arial, sans-serif;
-    font-size: 7pt;
+    font-size: 1rem;
     height: 35px;
     letter-spacing: 0;
     margin: 10px 5px;
     padding: 0 5px;
-    width: 110px;
+    width: 160px;
     box-shadow: 1px 5px 10px #000;
 }
 
