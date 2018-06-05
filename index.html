@@ -23,31 +23,34 @@
 <body class="container">
 
 <header role="banner">
-    <nav>
-        <h1 class="title" role="heading"><a href="/">Frest - Restaurant Reviews</a></h1>
+    <nav role="navigation">
+        <h1 class="title" role="heading">
+            <a tabindex="0" href="/" role="link">Frest - Restaurant Reviews</a>
+        </h1>
     </nav>
 </header>
 
 <main id="main-content" role="main">
     <section id="map-container" class="row" aria-label="google-map">
-        <div id="map"></div>
+        <div tabindex="0" id="map"></div>
     </section>
     <section>
         <div class="filter-options">
             <h2>Filter Results</h2>
-            <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" role="listbox">
+            <select tabindex="0" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" role="listbox">
                 <option value="all">All Neighborhoods</option>
             </select>
-            <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox">
+            <select tabindex="0" id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox">
                 <option value="all">All Cuisines</option>
             </select>
         </div>
-        <ul id="restaurants-list" role="list" aria-label="list-of-restaurants"></ul>
+
+        <ul tabindex="0" id="restaurants-list" role="list" aria-label="list-of-restaurants"></ul>
     </section>
 </main>
 
 <footer id="footer" role="contentinfo">
-    Copyright (c) 2018 <a href="/"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
+    Copyright (c) 2018 <a href="/" role="link"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
 </footer>
 
 <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>

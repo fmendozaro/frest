@@ -24,7 +24,7 @@ fetchNeighborhoods = () => {
             fillNeighborhoodsHTML();
         }
     });
-}
+};
 
 /**
  * Set neighborhoods HTML.
@@ -37,7 +37,7 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
         option.value = neighborhood;
         select.append(option);
     });
-}
+};
 
 /**
  * Fetch all cuisines and set their HTML.
@@ -51,7 +51,7 @@ fetchCuisines = () => {
             fillCuisinesHTML();
         }
     });
-}
+};
 
 /**
  * Set cuisines HTML.
@@ -65,7 +65,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
         option.value = cuisine;
         select.append(option);
     });
-}
+};
 
 /**
  * Initialize Google map, called from HTML.
@@ -81,7 +81,7 @@ initMap = () => {
         scrollwheel: false
     });
     updateRestaurants();
-}
+};
 
 /**
  * Update page and map for current restaurants.
@@ -104,7 +104,7 @@ updateRestaurants = () => {
             fillRestaurantsHTML();
         }
     })
-}
+};
 
 /**
  * Clear current restaurants, their HTML and remove their map markers.
@@ -119,7 +119,7 @@ resetRestaurants = (restaurants) => {
     self.markers.forEach(m => m.setMap(null));
     self.markers = [];
     self.restaurants = restaurants;
-}
+};
 
 /**
  * Create all restaurants HTML and add them to the webpage.
@@ -130,13 +130,14 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
         ul.append(createRestaurantHTML(restaurant));
     });
     addMarkersToMap();
-}
+};
 
 /**
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
     const li = document.createElement('li');
+    li.tabIndex = 0;
 
     const image = document.createElement('img');
     image.className = 'restaurant-img';
@@ -157,12 +158,14 @@ createRestaurantHTML = (restaurant) => {
     li.append(address);
 
     const more = document.createElement('a');
-    more.innerHTML = 'View Details';
+    more.innerHTML = 'View details';
     more.href = DBHelper.urlForRestaurant(restaurant);
-    li.append(more)
+    more.setAttribute('role', 'link');
+    more.tabIndex = 0;
+    li.append(more);
 
-    return li
-}
+    return li;
+};
 
 /**
  * Add markers for current restaurants to the map.
