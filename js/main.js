@@ -1,4 +1,4 @@
-const DBHelper = require('dbhelper.js');
+import {DBHelper} from './dbhelper.js';
 
 let restaurants,
     neighborhoods,
