@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#3397DB">
-    <meta name="description" content="The best place to review your fav places" />
+    <meta name="description" content="The best place to review your fav places"/>
 
     <!-- FB -->
-    <meta property="og:url"                content="https://udacity-mws-1524959693928.firebaseapp.com" />
-    <meta property="og:type"               content="website" />
-    <meta property="og:title"              content="Frest" />
-    <meta property="og:description"        content="The best place to review your fav places" />
-    <meta property="og:image"              content="https://udacity-mws-1524959693928.firebaseapp.com/img/1.jpg" />
+    <meta property="og:url" content="https://udacity-mws-1524959693928.firebaseapp.com"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Frest"/>
+    <meta property="og:description" content="The best place to review your fav places"/>
+    <meta property="og:image" content="https://udacity-mws-1524959693928.firebaseapp.com/img/1.jpg"/>
 
     <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
     <link rel="stylesheet" href="vendor/toastr.min.css">
@@ -36,12 +36,14 @@
     </section>
     <section>
         <div class="filter-options">
-            <h2>Filter Results</h2>
-            <select tabindex="0" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" role="listbox">
-                <option value="all">All Neighborhoods</option>
+            <label for="neighborhoods-select">Neighborhoods</label>
+            <select tabindex="0" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()"
+                    role="listbox">
+                <option value="all">All</option>
             </select>
+            <label for="cuisines-select">Cuisines</label>
             <select tabindex="0" id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox">
-                <option value="all">All Cuisines</option>
+                <option value="all">All</option>
             </select>
         </div>
 
@@ -53,8 +55,10 @@
     Copyright (c) 2018 <a href="/" role="link"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
 </footer>
 
-<script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-<script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+<script type="application/javascript" charset="utf-8" src="/dist/db_bundle.js"></script>
+<script type="application/javascript" charset="utf-8" src="/dist/app_bundle.js"></script>
+<script type="application/javascript" charset="utf-8" src="/dist/sw_bundle.js"></script>
+
 <script type="application/javascript" charset="utf-8" src="/vendor/sweetalert.min.js"></script>
 <script type="application/javascript" charset="utf-8" src="/vendor/jquery-3.3.1.min.js"></script>
 <script type="application/javascript" charset="utf-8" src="/vendor/toastr.min.js"></script>
