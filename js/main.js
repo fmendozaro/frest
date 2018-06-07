@@ -5,7 +5,7 @@ let restaurants,
     cuisines;
 var map;
 var markers = [];
-// window.initMap = initMap;
+window.initMap = initMap;
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.

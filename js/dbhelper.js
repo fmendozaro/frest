@@ -4,7 +4,7 @@
  * Common database helper functions.
  */
 
-class DBHelper {
+export class DBHelper {
 
     /**
      * Database URL.
@@ -161,5 +161,3 @@ class DBHelper {
     }
 
 }
-
-module.exports = DBHelper;

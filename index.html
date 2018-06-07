@@ -36,12 +36,12 @@
     </section>
     <section>
         <div class="filter-options">
-            <label for="neighborhoods-select">Neighborhoods</label>
+            <label class="hidden" for="neighborhoods-select">Neighborhoods</label>
             <select tabindex="0" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()"
                     role="listbox">
                 <option value="all">All</option>
             </select>
-            <label for="cuisines-select">Cuisines</label>
+            <label class="hidden" for="cuisines-select">Cuisines</label>
             <select tabindex="0" id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox">
                 <option value="all">All</option>
             </select>
@@ -55,8 +55,7 @@
     Copyright (c) 2018 <a href="/" role="link"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
 </footer>
 
-<script type="application/javascript" charset="utf-8" src="/dist/db_bundle.js"></script>
-<script type="application/javascript" charset="utf-8" src="/dist/app_bundle.js"></script>
+<script type="application/javascript" charset="utf-8" src="/dist/index_bundle.js"></script>
 <script type="application/javascript" charset="utf-8" src="/dist/sw_bundle.js"></script>
 
 <script type="application/javascript" charset="utf-8" src="/vendor/sweetalert.min.js"></script>

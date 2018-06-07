@@ -46,6 +46,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     width: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 #main-content {
     width: 100%;
     background-color: #f3f3f3;

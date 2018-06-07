@@ -7,8 +7,8 @@ module.exports = {
     mode: 'development',
     // where our app "starts"
     entry: {
-        db: './js/dbhelper.js',
-        app: ['./js/main.js', './js/restaurant_info.js'],
+        index: './js/main.js',
+        info: './js/restaurant_info.js',
         sw: './js/sw.js'
     },
     // where to put the transpiled javascript
