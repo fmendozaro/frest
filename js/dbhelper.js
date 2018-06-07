@@ -22,10 +22,11 @@ export class DBHelper {
         fetch(this.DATABASE_URL).then( response => response.json() )
             .then( data => {
                 // toastr.success('Restaurant list fetched successfully');
+                console.log(data);
                 callback(null, data);
             }).catch( e => {
                 console.log(e);
-                toastr.error('Error getting the list of restaurants');
+                toastr.error(`Error getting the list of restaurants ${e}`);
             });
     }
 
@@ -80,15 +81,17 @@ export class DBHelper {
     static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
         // Fetch all restaurants
         DBHelper.fetchRestaurants((error, restaurants) => {
+            // console.log(`error: ${error}`);
+            // console.log(`restaurants: ${restaurants}`);
             if (error) {
                 callback(error, null);
             } else {
-                let results = restaurants
-                if (cuisine != 'all') { // filter by cuisine
-                    results = results.filter(r => r.cuisine_type == cuisine);
+                let results = restaurants;
+                if (cuisine !== 'all') { // filter by cuisine
+                    results = results.filter(r => r.cuisine_type === cuisine);
                 }
-                if (neighborhood != 'all') { // filter by neighborhood
-                    results = results.filter(r => r.neighborhood == neighborhood);
+                if (neighborhood !== 'all') { // filter by neighborhood
+                    results = results.filter(r => r.neighborhood === neighborhood);
                 }
                 callback(null, results);
             }

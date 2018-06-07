@@ -3,9 +3,8 @@ import {DBHelper} from './dbhelper.js';
 let restaurants,
     neighborhoods,
     cuisines;
-var map;
-var markers = [];
-window.initMap = initMap;
+let map;
+let markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -13,6 +12,7 @@ window.initMap = initMap;
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchNeighborhoods();
     fetchCuisines();
+    updateRestaurants();
 });
 
 /**
@@ -86,6 +86,8 @@ let initMap = () => {
     updateRestaurants();
 };
 
+window.initMap = initMap;
+
 /**
  * Update page and map for current restaurants.
  */
@@ -101,6 +103,7 @@ let updateRestaurants = () => {
 
     DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
         if (error) { // Got an error!
+            toastr.error(`Error getting the list of restaurants ${error}`);
             console.error(error);
         } else {
             resetRestaurants(restaurants);
@@ -108,6 +111,8 @@ let updateRestaurants = () => {
         }
     })
 };
+
+window.updateRestaurants = updateRestaurants;
 
 /**
  * Clear current restaurants, their HTML and remove their map markers.
@@ -119,9 +124,11 @@ let resetRestaurants = (restaurants) => {
     ul.innerHTML = '';
 
     // Remove all map markers
-    self.markers.forEach(m => m.setMap(null));
-    self.markers = [];
-    self.restaurants = restaurants;
+    if(self.markers){
+        self.markers.forEach(m => m.setMap(null));
+        self.markers = [];
+        self.restaurants = restaurants;
+    }
 };
 
 /**
