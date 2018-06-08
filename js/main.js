@@ -1,10 +1,6 @@
 import {DBHelper} from './dbhelper.js';
 
-let restaurants,
-    neighborhoods,
-    cuisines;
-let map;
-let markers = [];
+self.markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -83,7 +79,6 @@ let initMap = () => {
         center: loc,
         scrollwheel: false
     });
-    updateRestaurants();
 };
 
 window.initMap = initMap;
@@ -106,6 +101,7 @@ let updateRestaurants = () => {
             toastr.error(`Error getting the list of restaurants ${error}`);
             console.error(error);
         } else {
+            self.restaurants = restaurants;
             resetRestaurants(restaurants);
             fillRestaurantsHTML();
         }
@@ -120,6 +116,7 @@ window.updateRestaurants = updateRestaurants;
 let resetRestaurants = (restaurants) => {
     // Remove all restaurants
     self.restaurants = [];
+    self.restaurants = restaurants;
     const ul = document.getElementById('restaurants-list');
     ul.innerHTML = '';
 
@@ -127,7 +124,6 @@ let resetRestaurants = (restaurants) => {
     if(self.markers){
         self.markers.forEach(m => m.setMap(null));
         self.markers = [];
-        self.restaurants = restaurants;
     }
 };
 
