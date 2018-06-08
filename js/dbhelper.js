@@ -1,5 +1,7 @@
 'use strict';
 
+import idb from './main-idb.js';
+
 /**
  * Common database helper functions.
  */
@@ -17,46 +19,32 @@ export class DBHelper {
     /**
      * Fetch all restaurants.
      */
-    static fetchRestaurants(callback) {
-
-        fetch(this.DATABASE_URL).then( response => response.json() )
-            .then( data => {
+    static fetchRestaurants() {
+        fetch(this.DATABASE_URL).then(response => response.json())
+            .then(restaurants => {
                 // toastr.success('Restaurant list fetched successfully');
-                console.log(data);
-                callback(null, data);
-            }).catch( e => {
-                console.log(e);
-                toastr.error(`Error getting the list of restaurants ${e}`);
-            });
+                idb.insert('restaurants', restaurants);
+            }).catch(e => {
+            toastr.error(`Error getting the list of restaurants ${e}`);
+        });
     }
 
     /**
      * Fetch a restaurant by its ID.
      */
     static fetchRestaurantById(id, callback) {
-        fetch(this.DATABASE_URL+'/'+id).then( response => response.json() )
-            .then( restaurant => {
-                callback(null, restaurant);
-            }).catch( e => {
-                console.log(e);
-                toastr.error('Error getting the restaurant info');
-            });
+        const result = idb.selectAll().filter(r => r.id === id);
+        console.log('fetchRestaurantById', result);
+        callback(null, result);
     }
 
     /**
      * Fetch restaurants by a cuisine type with proper error handling.
      */
     static fetchRestaurantByCuisine(cuisine, callback) {
-        // Fetch all restaurants  with proper error handling
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Filter restaurants to have only given cuisine type
-                const results = restaurants.filter(r => r.cuisine_type == cuisine);
-                callback(null, results);
-            }
-        });
+        const results = idb.selectAll().filter(r => r.cuisine_type === cuisine);
+        console.log('fetchRestaurantByCuisine', results);
+        callback(null, results);
     }
 
     /**
@@ -64,74 +52,57 @@ export class DBHelper {
      */
     static fetchRestaurantByNeighborhood(neighborhood, callback) {
         // Fetch all restaurants
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Filter restaurants to have only given neighborhood
-                const results = restaurants.filter(r => r.neighborhood == neighborhood);
-                callback(null, results);
-            }
-        });
+        // DBHelper.fetchRestaurants((error, restaurants) => {
+        //     if (error) {
+        //         callback(error, null);
+        //     } else {
+        //         // Filter restaurants to have only given neighborhood
+        //         const results = restaurants.filter(r => r.neighborhood == neighborhood);
+        //         callback(null, results);
+        //     }
+        // });
+        const results = idb.selectAll().filter(r => r.neighborhood === neighborhood);
+        console.log('fetchRestaurantByNeighborhood', results);
+        callback(null, results);
     }
 
     /**
      * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
      */
     static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
-        // Fetch all restaurants
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            // console.log(`error: ${error}`);
-            // console.log(`restaurants: ${restaurants}`);
-            if (error) {
-                callback(error, null);
-            } else {
-                let results = restaurants;
-                if (cuisine !== 'all') { // filter by cuisine
-                    results = results.filter(r => r.cuisine_type === cuisine);
-                }
-                if (neighborhood !== 'all') { // filter by neighborhood
-                    results = results.filter(r => r.neighborhood === neighborhood);
-                }
-                callback(null, results);
-            }
-        });
+        let results = idb.selectAll();
+        console.log('fetchRestaurantByCuisineAndNeighborhood', results);
+
+        if (cuisine !== 'all') { // filter by cuisine
+            results = results.filter(r => r.cuisine_type === cuisine);
+        }
+        if (neighborhood !== 'all') { // filter by neighborhood
+            results = results.filter(r => r.neighborhood === neighborhood);
+        }
+        console.log('fetchRestaurantByCuisineAndNeighborhood', results);
+        callback(null, results);
     }
 
     /**
      * Fetch all neighborhoods with proper error handling.
      */
     static fetchNeighborhoods(callback) {
-        // Fetch all restaurants
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Get all neighborhoods from all restaurants
-                const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
-                // Remove duplicates from neighborhoods
-                const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
-                callback(null, uniqueNeighborhoods);
-            }
-        });
+        const restaurants = idb.selectAll();
+        console.log('fetchNeighborhoods restaurants', restaurants);
+        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
+        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) === i);
+        callback(null, uniqueNeighborhoods);
     }
 
     /**
      * Fetch all cuisines with proper error handling.
      */
     static fetchCuisines(callback) {
-        // Fetch all restaurants
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Get all cuisines from all restaurants
-                const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
-                // Remove duplicates from cuisines
-                const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
-                callback(null, uniqueCuisines);
-            }
-        });
+        const cuisines = idb.selectAll().map((v, i) => restaurants[i].cuisine_type);
+        // Remove duplicates from cuisines
+        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) === i)
+        console.log('fetchCuisines', uniqueCuisines);
+        callback(null, uniqueCuisines);
     }
 
     /**
