@@ -57,7 +57,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 #footer {
     background-color: #444;
-    color: #aaa;
+    color: white;
     font-size: 1rem;
     letter-spacing: 2px;
     padding: 10px 25px;
@@ -160,7 +160,8 @@ nav h1 a {
 }
 
 .select-label {
-    color: white;
+    color: black;
+    font-weight: bold;
     font-size: 1.3rem;
     line-height: 40px;
 }
