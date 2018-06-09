@@ -33,9 +33,8 @@ export class DBHelper {
      */
     static fetchRestaurantById(id, callback) {
         idb.selectAll(restaurants => {
-            let result = restaurants.filter(r => r.id === id);
-            console.log('fetchRestaurantById', result);
-            callback(null, result);
+            let result = restaurants.filter(r => r.id == id);
+            callback(null, result[0]);
         });
     }
 
@@ -45,7 +44,6 @@ export class DBHelper {
     static fetchRestaurantByCuisine(cuisine, callback) {
         idb.selectAll( restaurants => {
             restaurants.filter(r => r.cuisine_type === cuisine);
-            console.log('fetchRestaurantByCuisine', restaurants);
             callback(null, restaurants);
         })
     }
@@ -56,7 +54,6 @@ export class DBHelper {
     static fetchRestaurantByNeighborhood(neighborhood, callback) {
         idb.selectAll( restaurants => {
             restaurants.filter(r => r.neighborhood === neighborhood);
-            console.log('fetchRestaurantByNeighborhood', restaurants);
             callback(null, restaurants);
         });
     }
@@ -66,15 +63,12 @@ export class DBHelper {
      */
     static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
         idb.selectAll( restaurants =>  {
-            console.log('fetchRestaurantByCuisineAndNeighborhood', restaurants);
-
             if (cuisine !== 'all') { // filter by cuisine
                 restaurants = restaurants.filter(r => r.cuisine_type === cuisine);
             }
             if (neighborhood !== 'all') { // filter by neighborhood
                 restaurants = restaurants.filter(r => r.neighborhood === neighborhood);
             }
-            console.log('fetchRestaurantByCuisineAndNeighborhood', restaurants);
             callback(null, restaurants);
         });
     }
@@ -84,7 +78,6 @@ export class DBHelper {
      */
     static fetchNeighborhoods(callback) {
         idb.selectAll( restaurants => {
-            console.log('fetchNeighborhoods restaurants', restaurants);
             const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
             const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) === i);
             callback(null, uniqueNeighborhoods);
