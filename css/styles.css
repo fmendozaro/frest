@@ -46,6 +46,13 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     width: 100%;
 }
 
+#btnAdd {
+    background-color: #2F96B4;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
 .hidden {
     display: none;
 }
@@ -454,6 +461,10 @@ footer a{
 
     #footer {
         font-size: 0.8rem;
+    }
+
+    #btnAdd {
+        display: none;
     }
 
 }
