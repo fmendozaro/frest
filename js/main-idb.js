@@ -19,12 +19,11 @@ const insert = (key, val) => {
     });
 };
 
-const selectAll = () => {
-    return dbPromise.then(db => {
+const selectAll = (callback) => {
+    dbPromise.then(db => {
         return db.transaction('keyval').objectStore('keyval').getAll();
     }).then(allObjs => {
-        console.log('selectAll', allObjs);
-        return allObjs;
+        callback(allObjs[0]);
     }).catch( e => {
         toastr.error(`Error getting the list of restaurants from DB ${e}`);
     });
