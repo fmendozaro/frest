@@ -34,10 +34,7 @@ btnAdd.addEventListener('click', (e) => {
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-    DBHelper.fetchRestaurants();
-    fetchNeighborhoods();
-    fetchCuisines();
-    updateRestaurants();
+    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
 });
 
 /**
@@ -96,21 +93,25 @@ let fillCuisinesHTML = (cuisines = self.cuisines) => {
 };
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize map, called from HTML.
  */
 let initMap = () => {
+
     let loc = {
         lat: 40.722216,
-        lng: -73.987501
+        lng:-73.987501
     };
-    self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: loc,
-        scrollwheel: false
-    });
-};
 
-window.initMap = initMap;
+    self.map = L.map('map').setView(loc, 12);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox.streets'
+    }).addTo(self.map);
+};
 
 /**
  * Update page and map for current restaurants.
@@ -151,7 +152,7 @@ let resetRestaurants = (restaurants) => {
 
     // Remove all map markers
     if(self.markers){
-        self.markers.forEach(m => m.setMap(null));
+        self.markers.forEach(m => m.remove());
         self.markers = [];
     }
 };
@@ -208,10 +209,7 @@ let createRestaurantHTML = (restaurant) => {
 let addMarkersToMap = (restaurants = self.restaurants) => {
     restaurants.forEach(restaurant => {
         // Add marker to the map
-        const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-        google.maps.event.addListener(marker, 'click', () => {
-            window.location.href = marker.url
-        });
+        let marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
         self.markers.push(marker);
     });
 };
@@ -233,6 +231,5 @@ module.exports = {
     resetRestaurants,
     fillRestaurantsHTML,
     createRestaurantHTML,
-    addMarkersToMap,
-    initMap
+    addMarkersToMap
 };

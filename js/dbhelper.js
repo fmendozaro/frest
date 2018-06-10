@@ -13,19 +13,22 @@ export class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        return `http://localhost:1337/restaurants`;
+        return 'http://localhost:1337/restaurants';
     }
 
     /**
      * Fetch all restaurants.
      */
-    static fetchRestaurants() {
+    static fetchRestaurants(callbackArray) {
         fetch(this.DATABASE_URL).then(response => response.json())
             .then(restaurants => {
                 idb.insert('restaurants', restaurants);
+                callbackArray.forEach( fx => {
+                    fx();
+                });
             }).catch(e => {
-            toastr.error(`Error getting the list of restaurants ${e}`);
-        });
+                toastr.error(`Error getting the list of restaurants ${e}`);
+            });
     }
 
     /**
@@ -114,14 +117,8 @@ export class DBHelper {
      * Map marker for a restaurant.
      */
     static mapMarkerForRestaurant(restaurant, map) {
-        const marker = new google.maps.Marker({
-                position: restaurant.latlng,
-                title: restaurant.name,
-                url: DBHelper.urlForRestaurant(restaurant),
-                map: map,
-                animation: google.maps.Animation.DROP
-            }
-        );
+        let marker = L.marker(restaurant.latlng).addTo(map);
+        marker.bindPopup(`${restaurant.name} <br> <a href="${DBHelper.urlForRestaurant(restaurant)}">More info</a>`).openPopup();
         return marker;
     }
 
