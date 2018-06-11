@@ -3,14 +3,9 @@
   "name": "FREST Reviews",
   "icons": [
     {
-      "src": "/img/bull.svg",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/img/bull.svg",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "/img/bull.png",
+      "sizes": "144x144 64x64 32x32 24x24 16x16",
+      "type": "image/png"
     }
   ],
   "start_url": "/",
