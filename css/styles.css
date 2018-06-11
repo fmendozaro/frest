@@ -47,10 +47,12 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 #btnAdd {
-    background-color: #2F96B4;
+    background-color: #184c5d;
     border: none;
     color: white;
+    padding: 10px;
     cursor: pointer;
+    font-size: 1rem;
 }
 
 .hidden {
@@ -98,7 +100,7 @@ header {
 /* ====================== Navigation ====================== */
 nav {
     width: 100%;
-    height: 40px;
+    height: 80px;
     background-color: #252831;
     text-align: center;
 }
@@ -465,6 +467,10 @@ footer a{
 
     #btnAdd {
         display: none;
+    }
+
+    nav {
+        height: 40px;
     }
 
 }
