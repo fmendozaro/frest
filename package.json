@@ -4,12 +4,20 @@
   "description": "--- #### _Three Stage Course Material Project - Restaurant Reviews_",
   "main": "index.js",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
     "idb": "^2.1.1",
-    "npm": "^6.0.1"
+    "npm": "^6.0.1",
+    "webpack": "^4.11.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack-cli": "^3.0.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

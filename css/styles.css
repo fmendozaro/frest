@@ -46,6 +46,17 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     width: 100%;
 }
 
+#btnAdd {
+    background-color: #2F96B4;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
 #main-content {
     width: 100%;
     background-color: #f3f3f3;
@@ -53,7 +64,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 #footer {
     background-color: #444;
-    color: #aaa;
+    color: white;
     font-size: 1rem;
     letter-spacing: 2px;
     padding: 10px 25px;
@@ -147,11 +158,19 @@ nav h1 a {
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    justify-content: space-evenly;
-    height: 30px;
     background-color: #3397DB;
     margin-bottom: 30px;
+    padding-bottom: 30px;
+    align-items: center;
+}
+
+.select-label {
+    color: black;
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 40px;
 }
 
 .filter-options h2 {
@@ -172,7 +191,7 @@ nav h1 a {
     letter-spacing: 0;
     margin: 10px 5px;
     padding: 0 5px;
-    width: 160px;
+    width: 70%;
     box-shadow: 1px 5px 10px #000;
 }
 
@@ -326,7 +345,7 @@ nav h1 a {
     font-weight: bolder;
     color: white;
     letter-spacing: 2px;
-    width: 80px;
+    width: 100px;
 }
 
 #review-date {
@@ -362,18 +381,20 @@ footer a{
     }
 
     .filter-options {
+        flex-direction: row;
         justify-content: space-evenly;
+        padding-bottom: 5px;
     }
 
     .filter-options h2 {
-        font-size: 1rem;
+        font-size: 1.2rem;
         margin: 0 10px;
         padding: 8px 0 0 0;
     }
 
     .filter-options select {
         width: 200px;
-        font-size: 11pt;
+        font-size: 1.1rem;
     }
 
     #restaurants-list {
@@ -442,6 +463,10 @@ footer a{
         font-size: 0.8rem;
     }
 
+    #btnAdd {
+        display: none;
+    }
+
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -459,7 +484,6 @@ footer a{
 
     .filter-options {
         justify-content: space-evenly;
-        height: 40px;
     }
 
     .filter-options h2 {
@@ -515,6 +539,16 @@ footer a{
 
     #footer {
         font-size: 1rem;
+    }
+
+    #restaurant-name {
+        text-align: center;
+        width: 100%;
+        font-size: 3rem;
+    }
+
+    .restaurant-img, #restaurant-cuisine {
+        width: 80%;
     }
 
 }

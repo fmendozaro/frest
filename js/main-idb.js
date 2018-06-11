@@ -2,91 +2,35 @@
 
 import idb from 'idb';
 
-let dbPromise = idb.open('frest-db', 3, function (upgradeDb) {
-    switch (upgradeDb.oldVersion) {
-        case 0:
-            let keyValStore = upgradeDb.createObjectStore('keyval');
-            keyValStore.put("world", "hello");
-        case 1:
-            upgradeDb.createObjectStore('people', {keyPath: 'name'});
-        case 2:
-            let peopleStore = upgradeDb.transaction.objectStore('people');
-            peopleStore.createIndex('animal', 'favoriteAnimal');
-    }
-    // TODO: create an index on 'people' named 'age', ordered by 'age'
+const dbPromise = idb.open('frest-db', 1, upgradeDb => {
+    let store = upgradeDb.createObjectStore('keyval');
 });
 
-// read "hello" in "keyval"
-dbPromise.then(function(db) {
-    let tx = db.transaction('keyval');
-    let keyValStore = tx.objectStore('keyval');
-    return keyValStore.get('hello');
-}).then(function(val) {
-    console.log('The value of "hello" is:', val);
-});
-
-// set "foo" to be "bar" in "keyval"
-dbPromise.then(function(db) {
-    let tx = db.transaction('keyval', 'readwrite');
-    let keyValStore = tx.objectStore('keyval');
-    keyValStore.put('bar', 'foo');
-    return tx.complete;
-}).then(function() {
-    console.log('Added foo:bar to keyval');
-});
-
-dbPromise.then(function(db) {
-    let tx = db.transaction('keyval', 'readwrite');
-    let keyValStore = tx.objectStore('keyval');
-    keyValStore.put('cat', 'favoriteAnimal');
-    return tx.complete;
-}).then(function() {
-    console.log('Added favoriteAnimal:cat to keyval');
-});
-
-// add people to "people"
-dbPromise.then(function(db) {
-    let tx = db.transaction('people', 'readwrite');
-    let peopleStore = tx.objectStore('people');
-
-    peopleStore.put({
-        name: 'Sam Munoz',
-        age: 25,
-        favoriteAnimal: 'dog'
+const insert = (key, val) => {
+    dbPromise.then(db => {
+        let tx = db.transaction('keyval', 'readwrite');
+        let keyValStore = tx.objectStore('keyval');
+        keyValStore.put(val, key);
+        return tx.complete;
+    }).then(() => {
+        console.log(`Added ${key}:${val} to keyval`);
+    }).catch(e => {
+        toastr.error(`Error inserting the list of restaurants in DB ${e}`);
     });
+};
 
-    peopleStore.put({
-        name: 'Susan Keller',
-        age: 34,
-        favoriteAnimal: 'cat'
+const selectAll = (callback) => {
+    dbPromise.then(db => {
+        return db.transaction('keyval').objectStore('keyval').getAll();
+    }).then(allObjs => {
+        callback(allObjs[0]);
+    }).catch( e => {
+        toastr.error(`Error getting the list of restaurants from DB ${e}`);
     });
+};
 
-    peopleStore.put({
-        name: 'Lillie Wolfe',
-        age: 28,
-        favoriteAnimal: 'dog'
-    });
-
-    peopleStore.put({
-        name: 'Marc Stone',
-        age: 39,
-        favoriteAnimal: 'cat'
-    });
-
-    return tx.complete;
-}).then(function() {
-    console.log('People added');
-});
-
-// list all cat people
-dbPromise.then(function(db) {
-    let tx = db.transaction('people');
-    let peopleStore = tx.objectStore('people');
-    let animalIndex = peopleStore.index('animal');
-
-    return animalIndex.getAll('cat');
-}).then(function(people) {
-    console.log('Cat people:', people);
-});
-
-
+module.exports = {
+    dbPromise,
+    insert,
+    selectAll
+};
