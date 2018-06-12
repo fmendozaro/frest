@@ -2,7 +2,6 @@ import {DBHelper} from './dbhelper.js';
 
 self.markers = [];
 
-//
 // let deferredPrompt;
 // let btnAdd = document.querySelector('#btnAdd');
 //
