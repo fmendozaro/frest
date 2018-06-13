@@ -27,6 +27,7 @@ self.addEventListener('install', event => {
             '/img/10.jpg',
             '/img/bull.png',
             '/img/favicon.ico',
+            '/img/placeholder.png',
             '/dist/index_bundle.js',
             '/dist/info_bundle.js',
             '/vendor/sweetalert.min.js',

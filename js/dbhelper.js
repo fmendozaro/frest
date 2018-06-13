@@ -110,7 +110,11 @@ export class DBHelper {
      * Restaurant image URL.
      */
     static imageUrlForRestaurant(restaurant) {
-        return (`/img/${restaurant.photograph}.jpg`);
+        console.log('restaurant.photograph', restaurant.photograph);
+        if(restaurant.photograph !== undefined)
+            return (`/img/${restaurant.photograph}.jpg`);
+        else
+            return ('/img/placeholder.png');
     }
 
     /**
