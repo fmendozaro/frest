@@ -8,8 +8,7 @@ module.exports = {
     // where our app "starts"
     entry: {
         index: './js/main.js',
-        info: './js/restaurant_info.js',
-        sw: './js/sw.js'
+        info: './js/restaurant_info.js'
     },
     // where to put the transpiled javascript
     output: {
