@@ -125,4 +125,18 @@ export class DBHelper {
         return marker;
     }
 
+    static insertReview(data){
+        fetch(`${this.DATABASE_URL}/reviews`, {
+            body: JSON.stringify(data),
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        .then( response => response.json())
+        .then( res => {
+            console.log('res', res);
+        });
+    }
+
 }

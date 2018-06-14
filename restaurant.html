@@ -53,6 +53,7 @@
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container" role="feed">
+        <button id="addReview" class="add-review" role="button">Add review</button>
         <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
@@ -64,6 +65,21 @@
     Copyright (c) 2018 <a href="/"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
 </footer>
 <!-- End footer -->
+<div id="add-review-form" class="hidden">
+    <form action="" method="post" role="form">
+        <label for="name">Name</label>
+        <input id="name" type="text" name="name">
+        <label>Rating</label>
+        <input type="radio" name="rating" value="1">
+        <input type="radio" name="rating" value="2">
+        <input type="radio" name="rating" value="3">
+        <input type="radio" name="rating" value="4">
+        <input type="radio" name="rating" value="5">
+        <label for="comments">Comments</label>
+        <textarea name="comments" id="comments" cols="30" rows="10"></textarea>
+        <button id="submit-review" role="button">Submit</button>
+    </form>
+</div>
 
 <script type="application/javascript" charset="utf-8" src="/vendor/sweetalert.min.js"></script>
 <script type="application/javascript" charset="utf-8" src="/vendor/jquery-3.3.1.min.js"></script>

@@ -185,6 +185,34 @@ let getParameterByName = (name, url) => {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
+// Add review
+
+let addReviewBtn = document.querySelector('#addReview');
+let addReviewForm = document.querySelector('#add-review-form');
+
+addReviewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    // let nameInput = addReviewForm.querySelector("#name");
+    // let ratingInput = addReviewForm.querySelector("input=name[rating]");
+    // let commentInput = addReviewForm.querySelector("#comments");
+    // let data = {
+    //     "restaurant_id": 1,
+    //     "name": nameInput.innerText,
+    //     "rating": ratingInput.value,
+    //     "comments": commentInput.innerText
+    //     };
+
+    let data = {
+        "restaurant_id": 1,
+        "name": 'Fer',
+        "rating": 3,
+        "comments": 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet beatae dolore doloremque ea minima neque numquam, obcaecati odit perferendis quibusdam sint soluta, sunt voluptas. Ad aliquid asperiores consequatur cum deleniti!'
+    };
+
+
+    DBHelper.insertReview(data);
+});
+
 module.exports =  {
     fetchRestaurantFromURL,
     fillRestaurantHTML,
