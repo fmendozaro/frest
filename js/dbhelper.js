@@ -13,14 +13,14 @@ export class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        return 'https://frest.glitch.me/restaurants';
+        return 'https://frest.glitch.me';
     }
 
     /**
      * Fetch all restaurants.
      */
     static fetchRestaurants(callbackArray) {
-        fetch(this.DATABASE_URL).then(response => response.json())
+        fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
             .then(restaurants => {
                 idb.insert('restaurants', restaurants);
                 callbackArray.forEach( fx => {
@@ -36,8 +36,8 @@ export class DBHelper {
      */
     static fetchRestaurantById(id, callback) {
         idb.selectAll(restaurants => {
-            let result = restaurants.filter(r => r.id == id);
-            callback(null, result[0]);
+            let restaurant = restaurants.filter(r => r.id == id)[0];
+            callback(null, restaurant);
         });
     }
 
@@ -110,7 +110,6 @@ export class DBHelper {
      * Restaurant image URL.
      */
     static imageUrlForRestaurant(restaurant) {
-        console.log('restaurant.photograph', restaurant.photograph);
         if(restaurant.photograph !== undefined)
             return (`/img/${restaurant.photograph}.jpg`);
         else

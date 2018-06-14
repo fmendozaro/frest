@@ -84,7 +84,7 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
         fillRestaurantHoursHTML();
     }
     // fill reviews
-    fillReviewsHTML();
+    fillReviewsHTML(restaurant.id);
 };
 
 /**
@@ -110,23 +110,30 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-    const container = document.getElementById('reviews-container');
-    const title = document.createElement('h2');
-    title.innerHTML = 'Reviews';
-    container.appendChild(title);
+let fillReviewsHTML = (id) => {
+    fetch(`${DBHelper.DATABASE_URL}/reviews?restaurant_id=${id}`)
+        .then(response => response.json())
+        .then(reviews => {
+            console.log('reviews',reviews);
+            const container = document.getElementById('reviews-container');
+            const title = document.createElement('h2');
+            title.innerHTML = 'Reviews';
+            container.appendChild(title);
 
-    if (!reviews) {
-        const noReviews = document.createElement('p');
-        noReviews.innerHTML = 'No reviews yet!';
-        container.appendChild(noReviews);
-        return;
-    }
-    const ul = document.getElementById('reviews-list');
-    reviews.forEach(review => {
-        ul.appendChild(createReviewHTML(review));
-    });
-    container.appendChild(ul);
+            if (!reviews) {
+                const noReviews = document.createElement('p');
+                noReviews.innerHTML = 'No reviews yet!';
+                container.appendChild(noReviews);
+                return;
+            }
+            const ul = document.getElementById('reviews-list');
+            reviews.forEach(review => {
+                ul.appendChild(createReviewHTML(review));
+            });
+            container.appendChild(ul);
+        }).catch( e => {
+            toastr.error(`Error getting the list of reviews ${e}`);
+        });
 };
 
 /**
@@ -137,7 +144,7 @@ let createReviewHTML = (review) => {
     const name = document.createElement('p');
     const date = document.createElement('span');
     date.setAttribute('id', 'review-date');
-    date.innerHTML = review.date;
+    date.innerHTML = new Date(review.createdAt).toLocaleDateString();
     name.innerHTML = review.name + date.outerHTML;
     li.appendChild(name);
 
