@@ -111,14 +111,12 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
  * Create all reviews HTML and add them to the webpage.
  */
 let fillReviewsHTML = (id) => {
+    console.log(id);
     fetch(`${DBHelper.DATABASE_URL}/reviews?restaurant_id=${id}`)
         .then(response => response.json())
         .then(reviews => {
-            console.log('reviews',reviews);
+
             const container = document.getElementById('reviews-container');
-            const title = document.createElement('h2');
-            title.innerHTML = 'Reviews';
-            container.appendChild(title);
 
             if (!reviews) {
                 const noReviews = document.createElement('p');
@@ -126,7 +124,10 @@ let fillReviewsHTML = (id) => {
                 container.appendChild(noReviews);
                 return;
             }
+
             const ul = document.getElementById('reviews-list');
+            // Clean and refresh the container
+            ul.innerHTML = '';
             reviews.forEach(review => {
                 ul.appendChild(createReviewHTML(review));
             });
@@ -190,27 +191,40 @@ let getParameterByName = (name, url) => {
 let addReviewBtn = document.querySelector('#addReview');
 let addReviewForm = document.querySelector('#add-review-form');
 
+let modal = document.querySelector('#myModal');
+
+let closeModal = document.getElementsByClassName("close")[0];
+
+closeModal.addEventListener('click', () => {
+    modal.style.display = "none";
+});
+
 addReviewBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    // let nameInput = addReviewForm.querySelector("#name");
-    // let ratingInput = addReviewForm.querySelector("input=name[rating]");
-    // let commentInput = addReviewForm.querySelector("#comments");
-    // let data = {
-    //     "restaurant_id": 1,
-    //     "name": nameInput.innerText,
-    //     "rating": ratingInput.value,
-    //     "comments": commentInput.innerText
-    //     };
+    modal.style.display = 'block';
+});
+
+let submitReviewBtn = document.querySelector('#submit-review');
+
+submitReviewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let nameInput = addReviewForm.querySelector('#name');
+    let ratingInput = addReviewForm.querySelector('.rating:checked');
+    let commentInput = addReviewForm.querySelector('#comments');
 
     let data = {
-        "restaurant_id": 1,
-        "name": 'Fer',
-        "rating": 3,
-        "comments": 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet beatae dolore doloremque ea minima neque numquam, obcaecati odit perferendis quibusdam sint soluta, sunt voluptas. Ad aliquid asperiores consequatur cum deleniti!'
+        "restaurant_id": getParameterByName('id'),
+        "name": nameInput.value,
+        "rating": ratingInput.value,
+        "comments": commentInput.value
     };
 
-
-    DBHelper.insertReview(data);
+    DBHelper.insertReview(data, (res) => {
+        modal.style.display = 'none';
+        toastr.success('Review saved');
+        fillReviewsHTML(res.restaurant_id);
+        window.scrollTo(0, document.body.scrollHeight);
+    });
 });
 
 module.exports =  {

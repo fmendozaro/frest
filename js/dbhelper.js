@@ -125,7 +125,7 @@ export class DBHelper {
         return marker;
     }
 
-    static insertReview(data){
+    static insertReview(data, callback){
         fetch(`${this.DATABASE_URL}/reviews`, {
             body: JSON.stringify(data),
             method: 'POST',
@@ -135,7 +135,7 @@ export class DBHelper {
         })
         .then( response => response.json())
         .then( res => {
-            console.log('res', res);
+            callback(res);
         });
     }
 

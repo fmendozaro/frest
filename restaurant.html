@@ -17,7 +17,7 @@
     <title>Frest - Restaurant Reviews</title>
 </head>
 
-<body class="inside container">
+<div class="inside container">
 <!-- Beginning header -->
 <header role="banner">
     <!-- Beginning nav -->
@@ -53,7 +53,10 @@
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container" role="feed">
-        <button id="addReview" class="add-review" role="button">Add review</button>
+        <h2>Reviews</h2>
+        <div>
+            <button id="addReview" class="add-review" role="button">Add review</button>
+        </div>
         <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
@@ -65,20 +68,29 @@
     Copyright (c) 2018 <a href="/"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
 </footer>
 <!-- End footer -->
-<div id="add-review-form" class="hidden">
-    <form action="" method="post" role="form">
-        <label for="name">Name</label>
-        <input id="name" type="text" name="name">
-        <label>Rating</label>
-        <input type="radio" name="rating" value="1">
-        <input type="radio" name="rating" value="2">
-        <input type="radio" name="rating" value="3">
-        <input type="radio" name="rating" value="4">
-        <input type="radio" name="rating" value="5">
-        <label for="comments">Comments</label>
-        <textarea name="comments" id="comments" cols="30" rows="10"></textarea>
-        <button id="submit-review" role="button">Submit</button>
-    </form>
+
+<div id="myModal" class="modal hidden">
+    <div class="form-wrap modal-content">
+        <span class="close">&times;</span>
+        <form id="add-review-form" action="" method="post" role="form">
+            <h3>Let us know your comments</h3>
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name">
+            <br>
+            <label>Rating</label>
+            <input type="radio" name="rating" class="rating" value="1"> 1
+            <input type="radio" name="rating" class="rating"  value="2"> 2
+            <input type="radio" name="rating" class="rating"  value="3"> 3
+            <input type="radio" name="rating" class="rating"  value="4"> 4
+            <input type="radio" name="rating" class="rating"  value="5"> 5
+            <br>
+            <label for="comments">Comments</label>
+            <br>
+            <textarea name="comments" id="comments" cols="50" rows="10"></textarea>
+            <br>
+            <button id="submit-review" role="button">Submit</button>
+        </form>
+    </div>
 </div>
 
 <script type="application/javascript" charset="utf-8" src="/vendor/sweetalert.min.js"></script>
