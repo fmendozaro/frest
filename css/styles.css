@@ -54,6 +54,15 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     padding: 10px;
 }
 
+.add-review-wrap {
+    width: 80%;
+    text-align: right;
+}
+
+.add-review-wrap button {
+    font-size: 1rem;
+}
+
 .hidden {
     display: none;
 }
