@@ -36,6 +36,7 @@ self.markers = [];
 document.addEventListener('DOMContentLoaded', (event) => {
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
+    startIO();
 });
 
 /**
@@ -221,6 +222,36 @@ if (navigator.serviceWorker) {
     }).catch(() => {
         console.log('ServiceWorker not registered');
     });
+}
+
+function startIO(){
+
+    let IoConfig = {
+        rootMargin: '50px 0px',
+        threshold: 0.01
+    };
+
+    let images = document.getElementsByName('img');
+
+    if (!('IntersectionObserver' in window)) {
+        console.log('No IntersectionObserver available');
+    } else {
+        // It is supported, load the images
+        let observer = new IntersectionObserver(changes => {
+            for (const change of changes) {
+                console.log(change.time);               // Timestamp when the change occurred
+                console.log(change.rootBounds);         // Unclipped area of root
+                console.log(change.boundingClientRect); // target.boundingClientRect()
+                console.log(change.intersectionRect);   // boundingClientRect, clipped by its containing block ancestors, and intersected with rootBounds
+                console.log(change.intersectionRatio);  // Ratio of intersectionRect area to boundingClientRect area
+                console.log(change.target);             // the Element target
+            }
+        }, IoConfig);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+    }
 }
 
 module.exports = {
