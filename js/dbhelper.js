@@ -136,6 +136,20 @@ export class DBHelper {
         .then( response => response.json())
         .then( res => {
             callback(res);
+        }).catch( e => {
+            console.error(e);
+            toastr.warning('You seem to be offline, we will try post the review later');
+            idb.insert('pending_request', data);
+        });
+    }
+
+    static checkPendingRequests(){
+        idb.getPendingRequests( pendingReview => {
+            console.log('pendingReview', pendingReview);
+            this.insertReview(pendingReview, () => {
+                toastr.success('Pending offline review posted');
+                idb.removeKey('pending_request');
+            });
         });
     }
 

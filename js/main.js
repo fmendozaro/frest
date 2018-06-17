@@ -35,6 +35,7 @@ self.markers = [];
  */
 document.addEventListener('DOMContentLoaded', (event) => {
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
+    DBHelper.checkPendingRequests();
 });
 
 /**

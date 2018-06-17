@@ -8,6 +8,7 @@ let restaurant, map;
 
 document.addEventListener('DOMContentLoaded', (event) => {
     initMap();
+    DBHelper.checkPendingRequests();
 });
 
 let initMap = () => {
@@ -218,6 +219,8 @@ submitReviewBtn.addEventListener('click', (e) => {
         "rating": ratingInput.value,
         "comments": commentInput.value
     };
+
+    modal.style.display = 'block';
 
     DBHelper.insertReview(data, (res) => {
         modal.style.display = 'none';
