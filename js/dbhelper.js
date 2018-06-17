@@ -13,14 +13,14 @@ export class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        return 'https://frest.glitch.me/restaurants';
+        return 'https://frest.glitch.me';
     }
 
     /**
      * Fetch all restaurants.
      */
     static fetchRestaurants(callbackArray) {
-        fetch(this.DATABASE_URL).then(response => response.json())
+        fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
             .then(restaurants => {
                 idb.insert('restaurants', restaurants);
                 callbackArray.forEach( fx => {
@@ -36,8 +36,8 @@ export class DBHelper {
      */
     static fetchRestaurantById(id, callback) {
         idb.selectAll(restaurants => {
-            let result = restaurants.filter(r => r.id == id);
-            callback(null, result[0]);
+            let restaurant = restaurants.filter(r => r.id == id)[0];
+            callback(null, restaurant);
         });
     }
 
@@ -110,7 +110,10 @@ export class DBHelper {
      * Restaurant image URL.
      */
     static imageUrlForRestaurant(restaurant) {
-        return (`/img/${restaurant.photograph}.jpg`);
+        if(restaurant.photograph !== undefined)
+            return (`/img/${restaurant.photograph}.jpg`);
+        else
+            return ('/img/placeholder.png');
     }
 
     /**
@@ -120,6 +123,34 @@ export class DBHelper {
         let marker = L.marker(restaurant.latlng).addTo(map);
         marker.bindPopup(`${restaurant.name} <br> <a href="${DBHelper.urlForRestaurant(restaurant)}">More info</a>`).openPopup();
         return marker;
+    }
+
+    static insertReview(data, callback){
+        fetch(`${this.DATABASE_URL}/reviews`, {
+            body: JSON.stringify(data),
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        .then( response => response.json())
+        .then( res => {
+            callback(res);
+        }).catch( e => {
+            console.error(e);
+            toastr.warning('You seem to be offline, we will try post the review later');
+            idb.insert('pending_request', data);
+        });
+    }
+
+    static checkPendingRequests(){
+        idb.getPendingRequests( pendingReview => {
+            console.log('pendingReview', pendingReview);
+            this.insertReview(pendingReview, () => {
+                toastr.success('Pending offline review posted');
+                idb.removeKey('pending_request');
+            });
+        });
     }
 
 }
