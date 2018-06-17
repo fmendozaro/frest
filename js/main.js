@@ -34,6 +34,9 @@ self.markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+    let mapPlaceholder = document.querySelector("#map");
+    mapPlaceholder.style.backgroundImage = "url('/img/map-placeholder.jpg')";
+    mapPlaceholder.style.backgroundSize = 'cover';
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
     startIO();
