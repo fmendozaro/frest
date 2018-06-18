@@ -8,10 +8,6 @@ let observer;
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Place holder pic for the map
-    let mapPlaceholder = document.querySelector("#map");
-    mapPlaceholder.style.backgroundImage = "url('/img/map-placeholder.jpg')";
-    mapPlaceholder.style.backgroundSize = 'cover';
     // Fetches
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
@@ -76,6 +72,8 @@ let fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize map, called from HTML.
  */
 let initMap = () => {
+
+    document.querySelector("#map-placeholder").style.display = 'none';
 
     let loc = {
         lat: 40.722216,
