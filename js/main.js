@@ -238,6 +238,7 @@ function startIO(){
  * @param {string} url
  */
 function fetchImage(url) {
+    console.log('fetchImage url ', url);
     return new Promise((resolve, reject) => {
         const image = new Image();
         image.src = url;
@@ -251,7 +252,7 @@ function fetchImage(url) {
  * @param {object} image
  */
 function preloadImage(image) {
-    const src = image.dataset.src;
+    const src = image.src;
     if (!src) {
         return;
     }
@@ -291,8 +292,6 @@ function onIntersection(entries) {
     if (imageCount === 0) {
         observer.disconnect();
     }
-
-    console.log(entries);
 
     // Loop through the entries
     for (let i = 0; i < entries.length; i++) {
