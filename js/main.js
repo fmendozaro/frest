@@ -1,45 +1,20 @@
 import {DBHelper} from './dbhelper.js';
 
 self.markers = [];
-
-// let deferredPrompt;
-// let btnAdd = document.querySelector('#btnAdd');
-//
-// window.addEventListener('beforeinstallprompt', (e) => {
-//     console.log('beforeinstallprompt listening');
-//     // Prevent Chrome 67 and earlier from automatically showing the prompt
-//     e.preventDefault();
-//     // Stash the event so it can be triggered later.
-//     deferredPrompt = e;
-// });
-//
-// btnAdd.addEventListener('click', (e) => {
-//     // hide our user interface that shows our A2HS button
-//     btnAdd.style.display = 'none';
-//     // Show the prompt
-//     deferredPrompt.prompt();
-//     // Wait for the user to respond to the prompt
-//     deferredPrompt.userChoice
-//         .then((choiceResult) => {
-//             if (choiceResult.outcome === 'accepted') {
-//                 console.log('User accepted the A2HS prompt');
-//             } else {
-//                 console.log('User dismissed the A2HS prompt');
-//             }
-//             deferredPrompt = null;
-//         });
-// });
+let imageCount = 0;
+let observer;
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+    // Place holder pic for the map
     let mapPlaceholder = document.querySelector("#map");
     mapPlaceholder.style.backgroundImage = "url('/img/map-placeholder.jpg')";
     mapPlaceholder.style.backgroundSize = 'cover';
+    // Fetches
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
-    startIO();
 });
 
 /**
@@ -170,6 +145,7 @@ let fillRestaurantsHTML = (restaurants = self.restaurants) => {
     restaurants.forEach(restaurant => {
         ul.append(createRestaurantHTML(restaurant));
     });
+    startIO();
     addMarkersToMap();
 };
 
@@ -181,7 +157,7 @@ let createRestaurantHTML = (restaurant) => {
     li.tabIndex = 0;
 
     const image = document.createElement('img');
-    image.className = 'restaurant-img';
+    image.className = 'restaurant-img js-lazy-image';
     image.src = DBHelper.imageUrlForRestaurant(restaurant);
     image.alt = "restaurant main image";
     li.append(image);
@@ -229,32 +205,119 @@ if (navigator.serviceWorker) {
 
 function startIO(){
 
-    let IoConfig = {
-        rootMargin: '50px 0px',
-        threshold: 0.01
+    let ioConfig = {
+        root: null,
+        rootMargin: '0px',
+        threshold: [0]
     };
 
-    let images = document.getElementsByName('img');
+    let images = document.querySelectorAll('.js-lazy-image');
+    imageCount = images.length;
 
+// If we don't have support for intersection observer, loads the images immediately
     if (!('IntersectionObserver' in window)) {
-        console.log('No IntersectionObserver available');
+        console.error('no IntersectionObserver');
+        loadImagesImmediately(images);
     } else {
         // It is supported, load the images
-        let observer = new IntersectionObserver(changes => {
-            for (const change of changes) {
-                console.log(change.time);               // Timestamp when the change occurred
-                console.log(change.rootBounds);         // Unclipped area of root
-                console.log(change.boundingClientRect); // target.boundingClientRect()
-                console.log(change.intersectionRect);   // boundingClientRect, clipped by its containing block ancestors, and intersected with rootBounds
-                console.log(change.intersectionRatio);  // Ratio of intersectionRect area to boundingClientRect area
-                console.log(change.target);             // the Element target
+        observer = new IntersectionObserver(onIntersection, ioConfig);
+        // foreach() is not supported in IE
+        for (let i = 0; i < images.length; i++) {
+            let image = images[i];
+            if (image.classList.contains('js-lazy-image--handled')) {
+                continue;
             }
-        }, IoConfig);
 
-        images.forEach(image => {
             observer.observe(image);
-        });
+        }
     }
+}
+
+/**
+ * Fetchs the image for the given URL
+ * @param {string} url
+ */
+function fetchImage(url) {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.src = url;
+        image.onload = resolve;
+        image.onerror = reject;
+    });
+}
+
+/**
+ * Preloads the image
+ * @param {object} image
+ */
+function preloadImage(image) {
+    const src = image.dataset.src;
+    if (!src) {
+        return;
+    }
+
+    return fetchImage(src).then(() => { applyImage(image, src); });
+}
+
+/**
+ * Load all of the images immediately
+ * @param {NodeListOf<Element>} images
+ */
+function loadImagesImmediately(images) {
+    // foreach() is not supported in IE
+    for (let i = 0; i < images.length; i++) {
+        let image = images[i];
+        preloadImage(image);
+    }
+}
+
+/**
+ * Disconnect the observer
+ */
+function disconnect() {
+    if (!observer) {
+        return;
+    }
+
+    observer.disconnect();
+}
+
+/**
+ * On intersection
+ * @param {array} entries
+ */
+function onIntersection(entries) {
+    // Disconnect if we've already loaded all of the images
+    if (imageCount === 0) {
+        observer.disconnect();
+    }
+
+    console.log(entries);
+
+    // Loop through the entries
+    for (let i = 0; i < entries.length; i++) {
+        let entry = entries[i];
+        // Are we in viewport?
+        if (entry.intersectionRatio > 0) {
+            imageCount--;
+
+            // Stop watching and load the image
+            observer.unobserve(entry.target);
+            preloadImage(entry.target);
+        }
+    }
+}
+
+/**
+ * Apply the image
+ * @param {object} img
+ * @param {string} src
+ */
+function applyImage(img, src) {
+    // Prevent this from being lazy loaded a second time.
+    img.classList.add('js-lazy-image--handled');
+    img.src = src;
+    img.classList.add('fade-in');
 }
 
 module.exports = {

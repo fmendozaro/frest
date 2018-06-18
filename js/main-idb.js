@@ -13,8 +13,8 @@ const insert = (key, val) => {
         keyValStore.put(val, key);
         return tx.complete;
     }).then(() => {
-        console.log('Added', key);
-        console.log('to', val);
+        // console.log('Added', key);
+        // console.log('to', val);
     }).catch(e => {
         toastr.error(`Error inserting the list of restaurants in DB ${e}`);
     });

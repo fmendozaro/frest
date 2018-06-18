@@ -1,6 +1,24 @@
 @charset "utf-8";
 /* CSS Document */
 
+/* Animations */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in{
+    animation-name: fadeIn;
+    animation-duration: 1.5s;
+}
+
+/* End animations */
+
 body, td, th, p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1rem;
