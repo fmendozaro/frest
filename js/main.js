@@ -1,4 +1,5 @@
 import {DBHelper} from './dbhelper.js';
+import lozad from 'lozad';
 
 self.markers = [];
 let imageCount = 0;
@@ -73,8 +74,6 @@ let fillCuisinesHTML = (cuisines = self.cuisines) => {
  */
 let initMap = () => {
 
-    document.querySelector("#map-placeholder").style.display = 'none';
-
     let loc = {
         lat: 40.722216,
         lng:-73.987501
@@ -105,9 +104,8 @@ let updateRestaurants = () => {
     const neighborhood = nSelect[nIndex].value;
 
     DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-        if (error) { // Got an error!
-            toastr.error(`Error getting the list of restaurants ${error}`);
-            console.error(error);
+        if (error) {
+            toastr.error(`Error getting the list of restaurants ByCuisineAndNeighborhood ${error}`);
         } else {
             self.restaurants = restaurants;
             resetRestaurants(restaurants);
@@ -155,7 +153,7 @@ let createRestaurantHTML = (restaurant) => {
     li.tabIndex = 0;
 
     const image = document.createElement('img');
-    image.className = 'restaurant-img js-lazy-image';
+    image.className = 'restaurant-img lozad';
     image.src = DBHelper.imageUrlForRestaurant(restaurant);
     image.alt = "restaurant main image";
     li.append(image);
@@ -203,32 +201,42 @@ if (navigator.serviceWorker) {
 
 function startIO(){
 
-    let ioConfig = {
-        root: null,
-        rootMargin: '0px',
-        threshold: [0]
-    };
+    let images = document.querySelectorAll('.lozad');
+    observer = lozad(images, {
+        load: el => {
+            console.log('loading element', el);
+            el.classList.add('fade-in');
 
-    let images = document.querySelectorAll('.js-lazy-image');
-    imageCount = images.length;
-
-// If we don't have support for intersection observer, loads the images immediately
-    if (!('IntersectionObserver' in window)) {
-        console.error('no IntersectionObserver');
-        loadImagesImmediately(images);
-    } else {
-        // It is supported, load the images
-        observer = new IntersectionObserver(onIntersection, ioConfig);
-        // foreach() is not supported in IE
-        for (let i = 0; i < images.length; i++) {
-            let image = images[i];
-            if (image.classList.contains('js-lazy-image--handled')) {
-                continue;
-            }
-
-            observer.observe(image);
         }
-    }
+    }); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
+
+//     let ioConfig = {
+//         root: null,
+//         rootMargin: '50px 0',
+//         threshold: [0]
+//     };
+//
+//     let images = document.querySelectorAll('.js-lazy-image');
+//     imageCount = images.length;
+//
+// // If we don't have support for intersection observer, loads the images immediately
+//     if (!('IntersectionObserver' in window)) {
+//         console.error('no IntersectionObserver');
+//         loadImagesImmediately(images);
+//     } else {
+//         // It is supported, load the images
+//         observer = new IntersectionObserver(onIntersection, ioConfig);
+//         // foreach() is not supported in IE
+//         for (let i = 0; i < images.length; i++) {
+//             let image = images[i];
+//             if (image.classList.contains('js-lazy-image--handled')) {
+//                 continue;
+//             }
+//
+//             observer.observe(image);
+//         }
+//     }
 }
 
 /**
