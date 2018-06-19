@@ -22,9 +22,9 @@ const insert = (key, val) => {
 
 const selectAll = (callback) => {
     dbPromise.then(db => {
-        return db.transaction('keyval').objectStore('keyval').getAll();
-    }).then(allObjs => {
-        callback(allObjs[0]);
+        return db.transaction('keyval').objectStore('keyval').get('restaurants');
+    }).then(restaurants => {
+        callback(restaurants);
     }).catch( e => {
         toastr.error(`Error getting the list of restaurants from DB ${e}`);
     });

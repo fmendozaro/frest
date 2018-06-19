@@ -270,8 +270,9 @@ nav h1 a {
 #restaurants-list li a {
     background-color: orange;
     border-bottom: 3px solid #eee;
-    color: #fff;
-    font-size: 0.9rem;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: bolder;
     padding: 10px 30px;
     text-decoration: none;
     text-transform: uppercase;
