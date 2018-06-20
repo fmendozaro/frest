@@ -142,6 +142,7 @@ let fillRestaurantsHTML = (restaurants = self.restaurants) => {
         ul.append(createRestaurantHTML(restaurant));
     });
     startIO();
+    addEventsToHTML();
     addMarkersToMap();
 };
 
@@ -178,12 +179,12 @@ let createRestaurantHTML = (restaurant) => {
     li.append(more);
 
     const favBtn = document.createElement('a');
-    let curFav = restaurant.is_favorite === 'true';
+    let curFav = restaurant.is_favorite == 'true';
     let star = (curFav) ? '★': '☆';
     favBtn.innerHTML = star;
     favBtn.className = 'fav-btn';
     favBtn.href = '#';
-    favBtn.setAttribute('data-url', DBHelper.urlForRestaurant(restaurant) + '/?is_favorite='+ (!curFav));
+    favBtn.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
     favBtn.setAttribute('role', 'link');
     favBtn.tabIndex = 0;
     li.append(favBtn);
@@ -223,25 +224,16 @@ function startIO(){
 }
 
 function addEventsToHTML() {
-    let favBtns = document.querySelectorAll('.favBtn');
+    let favBtns = document.querySelectorAll('.fav-btn');
     favBtns.forEach( (el) => {
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            DBHelper.favRestaurant(el.getAttribute('data-url'), curFav => {
-                e.innerHTML = (curFav) ? '★': '☆';
+        el.addEventListener('click', (event) => {
+            event.preventDefault();
+            let url = el.getAttribute('data-url');
+            DBHelper.favRestaurant(url, restaurant => {
+                let curFav = restaurant.is_favorite == 'true';
+                el.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
+                el.innerHTML = (curFav) ? '★': '☆';
             });
         })
     });
 }
-
-module.exports = {
-    fetchNeighborhoods,
-    fillNeighborhoodsHTML,
-    fetchCuisines,
-    fillCuisinesHTML,
-    updateRestaurants,
-    resetRestaurants,
-    fillRestaurantsHTML,
-    createRestaurantHTML,
-    addMarkersToMap
-};

@@ -147,9 +147,21 @@ export class DBHelper {
         idb.getPendingRequests( pendingReview => {
             console.log('pendingReview', pendingReview);
             this.insertReview(pendingReview, () => {
-                toastr.success('Pending offline review posted');
+                toastr.success('Pending offline request posted');
                 idb.removeKey('pending_request');
             });
+        });
+    }
+
+    static favRestaurant(url, callback){
+        fetch(this.DATABASE_URL + url, {
+            method: 'PUT'
+        }).then( response => response.json())
+            .then( res => {
+                callback(res);
+            }).catch( error => {
+                toastr.error('An error occurred while trying to fav a restaurant', error);
+                //idb.insert('pending_request', data);
         });
     }
 
