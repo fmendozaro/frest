@@ -112,7 +112,6 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
  * Create all reviews HTML and add them to the webpage.
  */
 let fillReviewsHTML = (id) => {
-    console.log(id);
     fetch(`${DBHelper.DATABASE_URL}/reviews?restaurant_id=${id}`)
         .then(response => response.json())
         .then(reviews => {
@@ -209,12 +208,13 @@ let submitReviewBtn = document.querySelector('#submit-review');
 
 submitReviewBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    let id = getParameterByName('id');
     let nameInput = addReviewForm.querySelector('#name');
     let ratingInput = addReviewForm.querySelector('.rating:checked');
     let commentInput = addReviewForm.querySelector('#comments');
 
     let data = {
-        "restaurant_id": getParameterByName('id'),
+        "restaurant_id": id,
         "name": nameInput.value,
         "rating": ratingInput.value,
         "comments": commentInput.value
@@ -223,10 +223,20 @@ submitReviewBtn.addEventListener('click', (e) => {
     modal.style.display = 'block';
 
     DBHelper.insertReview(data, (res) => {
+        // Hide/close the modal
         modal.style.display = 'none';
-        toastr.success('Review saved');
-        fillReviewsHTML(res.restaurant_id);
-        window.scrollTo(0, document.body.scrollHeight);
+        console.log('insertReview', res);
+        if(res === null){
+            let ul = document.getElementById('reviews-list');
+            data.name += ' [Offline review]';
+            data.createdAt = new Date().toLocaleDateString();
+            ul.appendChild(createReviewHTML(data));
+        }else{
+            toastr.success('Review saved');
+            fillReviewsHTML(id);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
     });
 });
 

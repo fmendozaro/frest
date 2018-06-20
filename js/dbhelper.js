@@ -132,15 +132,15 @@ export class DBHelper {
             headers: {
                 'content-type': 'application/json'
             }
-        })
-        .then( response => response.json())
-        .then( res => {
-            callback(res);
-        }).catch( e => {
-            console.error(e);
-            toastr.warning('You seem to be offline, we will try post the review later');
-            idb.insert('pending_request', data);
-        });
+        }).then( response => response.json())
+            .then( res => {
+                callback(res);
+            }).catch( e => {
+                toastr.warning('You seem to be offline, we will try to post the review once your are reconnected');
+                idb.insert('pending_request', data);
+                callback(null);
+
+            });
     }
 
     static checkPendingRequests(){
