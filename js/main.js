@@ -154,7 +154,7 @@ let createRestaurantHTML = (restaurant) => {
 
     const image = document.createElement('img');
     image.className = 'restaurant-img lozad';
-    image.src = DBHelper.imageUrlForRestaurant(restaurant);
+    image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
     image.alt = "restaurant main image";
     li.append(image);
 
@@ -176,6 +176,17 @@ let createRestaurantHTML = (restaurant) => {
     more.setAttribute('role', 'link');
     more.tabIndex = 0;
     li.append(more);
+
+    const favBtn = document.createElement('a');
+    let curFav = restaurant.is_favorite === 'true';
+    let star = (curFav) ? '★': '☆';
+    favBtn.innerHTML = star;
+    favBtn.className = 'fav-btn';
+    favBtn.href = '#';
+    favBtn.setAttribute('data-url', DBHelper.urlForRestaurant(restaurant) + '/?is_favorite='+ (!curFav));
+    favBtn.setAttribute('role', 'link');
+    favBtn.tabIndex = 0;
+    li.append(favBtn);
 
     return li;
 };
@@ -204,125 +215,23 @@ function startIO(){
     let images = document.querySelectorAll('.lozad');
     observer = lozad(images, {
         load: el => {
-            console.log('loading element', el);
+            el.src = el.getAttribute('data-src');
             el.classList.add('fade-in');
-
         }
     }); // lazy loads elements with default selector as '.lozad'
     observer.observe();
-
-//     let ioConfig = {
-//         root: null,
-//         rootMargin: '50px 0',
-//         threshold: [0]
-//     };
-//
-//     let images = document.querySelectorAll('.js-lazy-image');
-//     imageCount = images.length;
-//
-// // If we don't have support for intersection observer, loads the images immediately
-//     if (!('IntersectionObserver' in window)) {
-//         console.error('no IntersectionObserver');
-//         loadImagesImmediately(images);
-//     } else {
-//         // It is supported, load the images
-//         observer = new IntersectionObserver(onIntersection, ioConfig);
-//         // foreach() is not supported in IE
-//         for (let i = 0; i < images.length; i++) {
-//             let image = images[i];
-//             if (image.classList.contains('js-lazy-image--handled')) {
-//                 continue;
-//             }
-//
-//             observer.observe(image);
-//         }
-//     }
 }
 
-/**
- * Fetchs the image for the given URL
- * @param {string} url
- */
-function fetchImage(url) {
-    console.log('fetchImage url ', url);
-    return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.src = url;
-        image.onload = resolve;
-        image.onerror = reject;
+function addEventsToHTML() {
+    let favBtns = document.querySelectorAll('.favBtn');
+    favBtns.forEach( (el) => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            DBHelper.favRestaurant(el.getAttribute('data-url'), curFav => {
+                e.innerHTML = (curFav) ? '★': '☆';
+            });
+        })
     });
-}
-
-/**
- * Preloads the image
- * @param {object} image
- */
-function preloadImage(image) {
-    const src = image.src;
-    if (!src) {
-        return;
-    }
-
-    return fetchImage(src).then(() => { applyImage(image, src); });
-}
-
-/**
- * Load all of the images immediately
- * @param {NodeListOf<Element>} images
- */
-function loadImagesImmediately(images) {
-    // foreach() is not supported in IE
-    for (let i = 0; i < images.length; i++) {
-        let image = images[i];
-        preloadImage(image);
-    }
-}
-
-/**
- * Disconnect the observer
- */
-function disconnect() {
-    if (!observer) {
-        return;
-    }
-
-    observer.disconnect();
-}
-
-/**
- * On intersection
- * @param {array} entries
- */
-function onIntersection(entries) {
-    // Disconnect if we've already loaded all of the images
-    if (imageCount === 0) {
-        observer.disconnect();
-    }
-
-    // Loop through the entries
-    for (let i = 0; i < entries.length; i++) {
-        let entry = entries[i];
-        // Are we in viewport?
-        if (entry.intersectionRatio > 0) {
-            imageCount--;
-
-            // Stop watching and load the image
-            observer.unobserve(entry.target);
-            preloadImage(entry.target);
-        }
-    }
-}
-
-/**
- * Apply the image
- * @param {object} img
- * @param {string} src
- */
-function applyImage(img, src) {
-    // Prevent this from being lazy loaded a second time.
-    img.classList.add('js-lazy-image--handled');
-    img.src = src;
-    img.classList.add('fade-in');
 }
 
 module.exports = {
