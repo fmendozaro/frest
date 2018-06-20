@@ -153,6 +153,17 @@ let createRestaurantHTML = (restaurant) => {
     const li = document.createElement('li');
     li.tabIndex = 0;
 
+    const favBtn = document.createElement('a');
+    let curFav = restaurant.is_favorite == 'true';
+    let star = (curFav) ? '★': '☆';
+    favBtn.innerHTML = star;
+    favBtn.className = 'fav-btn';
+    favBtn.href = '#';
+    favBtn.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
+    favBtn.setAttribute('role', 'link');
+    // favBtn.tabIndex = 0;
+    li.append(favBtn);
+
     const image = document.createElement('img');
     image.className = 'restaurant-img lozad';
     image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
@@ -177,17 +188,6 @@ let createRestaurantHTML = (restaurant) => {
     more.setAttribute('role', 'link');
     more.tabIndex = 0;
     li.append(more);
-
-    const favBtn = document.createElement('a');
-    let curFav = restaurant.is_favorite == 'true';
-    let star = (curFav) ? '★': '☆';
-    favBtn.innerHTML = star;
-    favBtn.className = 'fav-btn';
-    favBtn.href = '#';
-    favBtn.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
-    favBtn.setAttribute('role', 'link');
-    favBtn.tabIndex = 0;
-    li.append(favBtn);
 
     return li;
 };
