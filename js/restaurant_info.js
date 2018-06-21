@@ -8,6 +8,7 @@ let restaurant, map;
 
 document.addEventListener('DOMContentLoaded', (event) => {
     initMap();
+    DBHelper.checkPendingRequests();
 });
 
 let initMap = () => {
@@ -84,7 +85,7 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
         fillRestaurantHoursHTML();
     }
     // fill reviews
-    fillReviewsHTML();
+    fillReviewsHTML(restaurant.id);
 };
 
 /**
@@ -110,23 +111,30 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-    const container = document.getElementById('reviews-container');
-    const title = document.createElement('h2');
-    title.innerHTML = 'Reviews';
-    container.appendChild(title);
+let fillReviewsHTML = (id) => {
+    fetch(`${DBHelper.DATABASE_URL}/reviews?restaurant_id=${id}`)
+        .then(response => response.json())
+        .then(reviews => {
 
-    if (!reviews) {
-        const noReviews = document.createElement('p');
-        noReviews.innerHTML = 'No reviews yet!';
-        container.appendChild(noReviews);
-        return;
-    }
-    const ul = document.getElementById('reviews-list');
-    reviews.forEach(review => {
-        ul.appendChild(createReviewHTML(review));
-    });
-    container.appendChild(ul);
+            const container = document.getElementById('reviews-container');
+
+            if (!reviews) {
+                const noReviews = document.createElement('p');
+                noReviews.innerHTML = 'No reviews yet!';
+                container.appendChild(noReviews);
+                return;
+            }
+
+            const ul = document.getElementById('reviews-list');
+            // Clean and refresh the container
+            ul.innerHTML = '';
+            reviews.forEach(review => {
+                ul.appendChild(createReviewHTML(review));
+            });
+            container.appendChild(ul);
+        }).catch( e => {
+            toastr.error(`Error getting the list of reviews ${e}`);
+        });
 };
 
 /**
@@ -137,7 +145,7 @@ let createReviewHTML = (review) => {
     const name = document.createElement('p');
     const date = document.createElement('span');
     date.setAttribute('id', 'review-date');
-    date.innerHTML = review.date;
+    date.innerHTML = new Date(review.createdAt).toLocaleDateString();
     name.innerHTML = review.name + date.outerHTML;
     li.appendChild(name);
 
@@ -177,6 +185,60 @@ let getParameterByName = (name, url) => {
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
+
+// Add review
+
+let addReviewBtn = document.querySelector('#addReview');
+let addReviewForm = document.querySelector('#add-review-form');
+
+let modal = document.querySelector('#myModal');
+
+let closeModal = document.getElementsByClassName("close")[0];
+
+closeModal.addEventListener('click', () => {
+    modal.style.display = "none";
+});
+
+addReviewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+});
+
+let submitReviewBtn = document.querySelector('#submit-review');
+
+submitReviewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let id = getParameterByName('id');
+    let nameInput = addReviewForm.querySelector('#name');
+    let ratingInput = addReviewForm.querySelector('.rating:checked');
+    let commentInput = addReviewForm.querySelector('#comments');
+
+    let data = {
+        "restaurant_id": id,
+        "name": nameInput.value,
+        "rating": ratingInput.value,
+        "comments": commentInput.value
+    };
+
+    modal.style.display = 'block';
+
+    DBHelper.insertReview(data, (res) => {
+        // Hide/close the modal
+        modal.style.display = 'none';
+        console.log('insertReview', res);
+        if(res === null){
+            let ul = document.getElementById('reviews-list');
+            data.name += ' [Offline review]';
+            data.createdAt = new Date().toLocaleDateString();
+            ul.appendChild(createReviewHTML(data));
+        }else{
+            toastr.success('Review saved');
+            fillReviewsHTML(id);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+    });
+});
 
 module.exports =  {
     fetchRestaurantFromURL,

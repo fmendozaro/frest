@@ -1,6 +1,24 @@
 @charset "utf-8";
 /* CSS Document */
 
+/* Animations */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in{
+    animation-name: fadeIn;
+    animation-duration: 1.5s;
+}
+
+/* End animations */
+
 body, td, th, p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1rem;
@@ -46,12 +64,21 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     width: 100%;
 }
 
-#btnAdd {
+#btnAdd, #addReview, #submit-review {
     background-color: #2F96B4;
     border: none;
     color: white;
     cursor: pointer;
     padding: 10px;
+}
+
+.add-review-wrap {
+    width: 80%;
+    text-align: right;
+}
+
+.add-review-wrap button {
+    font-size: 1rem;
 }
 
 .hidden {
@@ -149,10 +176,9 @@ nav h1 a {
 }
 
 /* ====================== Map ====================== */
-#map {
+#map, #map-placeholder {
     height: 400px;
     width: 100%;
-    background-color: #ccc;
 }
 
 /* ====================== Restaurant Filtering ====================== */
@@ -244,12 +270,20 @@ nav h1 a {
 #restaurants-list li a {
     background-color: orange;
     border-bottom: 3px solid #eee;
-    color: #fff;
-    font-size: 0.9rem;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: bolder;
     padding: 10px 30px;
     text-decoration: none;
     text-transform: uppercase;
     border-radius: 50px;
+}
+
+#restaurants-list li a.fav-btn {
+    padding: 10px 14px;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    border-radius: 50%;
 }
 
 /* ====================== Restaurant Details ====================== */
@@ -365,6 +399,54 @@ nav h1 a {
 
 footer a{
     padding: 0 5px;
+}
+
+/* Modals */
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#add-review-form{
+    margin: 0 auto;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    text-align: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* Small devices (tablets, 768px and up) */
