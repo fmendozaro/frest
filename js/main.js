@@ -1,39 +1,15 @@
 import {DBHelper} from './dbhelper.js';
+import lozad from 'lozad';
 
 self.markers = [];
-
-// let deferredPrompt;
-// let btnAdd = document.querySelector('#btnAdd');
-//
-// window.addEventListener('beforeinstallprompt', (e) => {
-//     console.log('beforeinstallprompt listening');
-//     // Prevent Chrome 67 and earlier from automatically showing the prompt
-//     e.preventDefault();
-//     // Stash the event so it can be triggered later.
-//     deferredPrompt = e;
-// });
-//
-// btnAdd.addEventListener('click', (e) => {
-//     // hide our user interface that shows our A2HS button
-//     btnAdd.style.display = 'none';
-//     // Show the prompt
-//     deferredPrompt.prompt();
-//     // Wait for the user to respond to the prompt
-//     deferredPrompt.userChoice
-//         .then((choiceResult) => {
-//             if (choiceResult.outcome === 'accepted') {
-//                 console.log('User accepted the A2HS prompt');
-//             } else {
-//                 console.log('User dismissed the A2HS prompt');
-//             }
-//             deferredPrompt = null;
-//         });
-// });
+let imageCount = 0;
+let observer;
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+    // Fetches
     DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
 });
@@ -128,9 +104,8 @@ let updateRestaurants = () => {
     const neighborhood = nSelect[nIndex].value;
 
     DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-        if (error) { // Got an error!
-            toastr.error(`Error getting the list of restaurants ${error}`);
-            console.error(error);
+        if (error) {
+            toastr.error(`Error getting the list of restaurants ByCuisineAndNeighborhood ${error}`);
         } else {
             self.restaurants = restaurants;
             resetRestaurants(restaurants);
@@ -166,6 +141,8 @@ let fillRestaurantsHTML = (restaurants = self.restaurants) => {
     restaurants.forEach(restaurant => {
         ul.append(createRestaurantHTML(restaurant));
     });
+    startIO();
+    addEventsToHTML();
     addMarkersToMap();
 };
 
@@ -176,9 +153,20 @@ let createRestaurantHTML = (restaurant) => {
     const li = document.createElement('li');
     li.tabIndex = 0;
 
+    const favBtn = document.createElement('a');
+    let curFav = restaurant.is_favorite == 'true';
+    let star = (curFav) ? '★': '☆';
+    favBtn.innerHTML = star;
+    favBtn.className = 'fav-btn';
+    favBtn.href = '#';
+    favBtn.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
+    favBtn.setAttribute('role', 'link');
+    // favBtn.tabIndex = 0;
+    li.append(favBtn);
+
     const image = document.createElement('img');
-    image.className = 'restaurant-img';
-    image.src = DBHelper.imageUrlForRestaurant(restaurant);
+    image.className = 'restaurant-img lozad';
+    image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
     image.alt = "restaurant main image";
     li.append(image);
 
@@ -223,14 +211,29 @@ if (navigator.serviceWorker) {
     });
 }
 
-module.exports = {
-    fetchNeighborhoods,
-    fillNeighborhoodsHTML,
-    fetchCuisines,
-    fillCuisinesHTML,
-    updateRestaurants,
-    resetRestaurants,
-    fillRestaurantsHTML,
-    createRestaurantHTML,
-    addMarkersToMap
-};
+function startIO(){
+
+    let images = document.querySelectorAll('.lozad');
+    observer = lozad(images, {
+        load: el => {
+            el.src = el.getAttribute('data-src');
+            el.classList.add('fade-in');
+        }
+    }); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
+}
+
+function addEventsToHTML() {
+    let favBtns = document.querySelectorAll('.fav-btn');
+    favBtns.forEach( (el) => {
+        el.addEventListener('click', (event) => {
+            event.preventDefault();
+            let url = el.getAttribute('data-url');
+            DBHelper.favRestaurant(url, restaurant => {
+                let curFav = restaurant.is_favorite == 'true';
+                el.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));
+                el.innerHTML = (curFav) ? '★': '☆';
+            });
+        })
+    });
+}

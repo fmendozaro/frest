@@ -28,6 +28,7 @@ self.addEventListener('install', event => {
             '/img/bull.png',
             '/img/favicon.ico',
             '/img/placeholder.png',
+            '/img/map-placeholder.jpg',
             '/dist/index_bundle.js',
             '/dist/info_bundle.js',
             '/vendor/sweetalert.min.js',
@@ -56,8 +57,6 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', event => {
-    console.log('fetched');
-
     event.respondWith(
         caches.match(event.request)
             .then(function(response) {
@@ -71,22 +70,7 @@ self.addEventListener('fetch', event => {
     );
 
 });
-//
-// function servePhoto(request) {
-//     let storageUrl = request.url.replace(/-\d+px\.jpg$/, '');
-//
-//     return caches.open(contentImgsCache).then(function (cache) {
-//         return cache.match(storageUrl).then(function (response) {
-//             if (response) return response;
-//
-//             return fetch(request).then(function (networkResponse) {
-//                 cache.put(storageUrl, networkResponse.clone());
-//                 return networkResponse;
-//             });
-//         });
-//     });
-// }
-//
+
 self.addEventListener('message', function (event) {
     if (event.data.action === 'skipWaiting') {
         self.skipWaiting();

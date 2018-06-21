@@ -132,24 +132,37 @@ export class DBHelper {
             headers: {
                 'content-type': 'application/json'
             }
-        })
-        .then( response => response.json())
-        .then( res => {
-            callback(res);
-        }).catch( e => {
-            console.error(e);
-            toastr.warning('You seem to be offline, we will try post the review later');
-            idb.insert('pending_request', data);
-        });
+        }).then( response => response.json())
+            .then( res => {
+                callback(res);
+            }).catch( e => {
+                toastr.warning('You seem to be offline, we will try to post the review once your are reconnected');
+                idb.insert('pending_request', data);
+                callback(null);
+
+            });
     }
 
     static checkPendingRequests(){
         idb.getPendingRequests( pendingReview => {
             console.log('pendingReview', pendingReview);
             this.insertReview(pendingReview, () => {
-                toastr.success('Pending offline review posted');
+                toastr.success('Pending offline request posted');
                 idb.removeKey('pending_request');
             });
+        });
+    }
+
+    static favRestaurant(url, callback){
+        fetch(this.DATABASE_URL + url, {
+            method: 'PUT'
+        }).then( response => response.json())
+            .then( res => {
+                callback(res);
+                toastr.success('Changes saved');
+            }).catch( error => {
+                toastr.error('An error occurred while trying to fav a restaurant', error);
+                //idb.insert('pending_request', data);
         });
     }
 
