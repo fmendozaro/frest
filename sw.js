@@ -1,5 +1,9 @@
 "use strict";
 
+window.addEventListener('offline', function(e) { toastr.error('Went offline'); });
+
+window.addEventListener('online', function(e) { toastr.success('Back online'); });
+
 let staticCacheName = 'frest-v1';
 let contentImgsCache = 'frest-content-imgs';
 let allCaches = [

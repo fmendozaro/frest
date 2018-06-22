@@ -184,6 +184,7 @@ let createRestaurantHTML = (restaurant) => {
 
     const more = document.createElement('a');
     more.innerHTML = 'View details';
+    more.setAttribute('aria-label', 'View details of ' + restaurant.name);
     more.href = DBHelper.urlForRestaurant(restaurant);
     more.setAttribute('role', 'link');
     more.tabIndex = 0;
@@ -235,5 +236,15 @@ function addEventsToHTML() {
                 el.innerHTML = (curFav) ? '★': '☆';
             });
         })
+    });
+
+    let showMap = document.querySelector('#show-map');
+    let map = document.querySelector('#map-container');
+    showMap.addEventListener('click', (e) => {
+        e.preventDefault();
+        let isVisible = (map.style.visibility === 'hidden');
+        showMap.innerText = (!isVisible) ? 'Show map' : 'Hide map';
+        map.style.visibility = (isVisible) ? 'visible':'hidden';
+        document.querySelector('#map').style.height = (isVisible) ? '400px':'0';
     });
 }

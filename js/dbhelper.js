@@ -20,15 +20,25 @@ export class DBHelper {
      * Fetch all restaurants.
      */
     static fetchRestaurants(callbackArray) {
-        fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
-            .then(restaurants => {
-                idb.insert('restaurants', restaurants);
+
+        idb.selectAll( restaurants => {
+            console.log(restaurants);
+            if(restaurants === undefined){
+                fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
+                    .then(restaurants => {
+                        idb.insert('restaurants', restaurants);
+                        callbackArray.forEach( fx => {
+                            fx();
+                        });
+                    }).catch(e => {
+                        toastr.error(`Error getting the list of restaurants ${e}`);
+                });
+            }else{
                 callbackArray.forEach( fx => {
                     fx();
                 });
-            }).catch(e => {
-                toastr.error(`Error getting the list of restaurants ${e}`);
-            });
+            }
+        });
     }
 
     /**
