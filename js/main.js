@@ -217,6 +217,8 @@ function startIO(){
     let images = document.querySelectorAll('.lozad');
     observer = lozad(images, {
         load: el => {
+            el.srcset = "elva-fairy-320w.jpg 320w,elva-fairy-480w.jpg 480w,elva-fairy-800w.jpg 800w";
+            el.sizes = "(max-width: 320px) 280px,(max-width: 480px) 440px,800px";
             el.src = el.getAttribute('data-src');
             el.classList.add('fade-in');
         }
