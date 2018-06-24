@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 0 20px;
 }
 
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, footer {
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, footer, main {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -115,10 +115,6 @@ header {
 #map-container {
     order: 1;
     width: 100%;
-}
-
-#show-map {
-    text-align: center;
 }
 
 .app-btn {
@@ -194,6 +190,10 @@ nav h1 a {
 /* ====================== Map ====================== */
 #map, #map-placeholder {
     width: 100%;
+}
+
+#show-map {
+    order: -1;
 }
 
 /* ====================== Restaurant Filtering ====================== */

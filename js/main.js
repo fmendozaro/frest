@@ -167,6 +167,7 @@ let createRestaurantHTML = (restaurant) => {
     const image = document.createElement('img');
     image.className = 'restaurant-img lozad';
     image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
+    image.setAttribute('data-id', restaurant.id);
     image.alt = "restaurant main image";
     li.append(image);
 
@@ -184,7 +185,7 @@ let createRestaurantHTML = (restaurant) => {
 
     const more = document.createElement('a');
     more.innerHTML = 'View details';
-    more.setAttribute('aria-label', 'View details of ' + restaurant.name);
+    more.setAttribute('aria-label', `View details of ${restaurant.name} restaurant`);
     more.href = DBHelper.urlForRestaurant(restaurant);
     more.setAttribute('role', 'link');
     more.tabIndex = 0;
@@ -217,7 +218,8 @@ function startIO(){
     let images = document.querySelectorAll('.lozad');
     observer = lozad(images, {
         load: el => {
-            el.srcset = "elva-fairy-320w.jpg 320w,elva-fairy-480w.jpg 480w,elva-fairy-800w.jpg 800w";
+            let id = el.getAttribute('data-id');
+            el.srcset = `/img/${id}-320w.jpg 320w, /img/${id}-480w.jpg 480w, /img/${id}-800w.jpg 800w`;
             el.sizes = "(max-width: 320px) 280px,(max-width: 480px) 440px,800px";
             el.src = el.getAttribute('data-src');
             el.classList.add('fade-in');
@@ -248,5 +250,6 @@ function addEventsToHTML() {
         showMap.innerText = (!isVisible) ? 'Show map' : 'Hide map';
         map.style.visibility = (isVisible) ? 'visible':'hidden';
         document.querySelector('#map').style.height = (isVisible) ? '400px':'0';
+        // document.querySelector('#map-container').style.height = (isVisible) ? '400px':'0';
     });
 }
