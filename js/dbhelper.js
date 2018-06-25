@@ -6,6 +6,9 @@ import idb from './main-idb.js';
  * Common database helper functions.
  */
 
+window.addEventListener('offline', function(e) { toastr.error('Went offline'); });
+window.addEventListener('online', function(e) { toastr.success('Back online'); });
+
 export class DBHelper {
 
     /**
@@ -13,16 +16,15 @@ export class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        return 'https://frest.glitch.me';
+        return 'http://localhost:1337';
     }
 
     /**
      * Fetch all restaurants.
      */
-    static fetchRestaurants(callbackArray) {
+    static fetchRestaurants(callbackArray, overlay) {
 
         idb.selectAll( restaurants => {
-            console.log(restaurants);
             if(restaurants === undefined){
                 fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
                     .then(restaurants => {
@@ -38,6 +40,7 @@ export class DBHelper {
                     fx();
                 });
             }
+            overlay.remove();
         });
     }
 

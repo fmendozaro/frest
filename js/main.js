@@ -10,7 +10,8 @@ let observer;
  */
 document.addEventListener('DOMContentLoaded', (event) => {
     // Fetches
-    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
+    let overlay = document.querySelector('#overlay');
+    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap], overlay);
     DBHelper.checkPendingRequests();
 });
 
@@ -83,9 +84,6 @@ let initMap = () => {
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox.streets'
     }).addTo(self.map);
 };
@@ -221,7 +219,6 @@ function startIO(){
             let id = el.getAttribute('data-id');
             el.srcset = `/img/${id}-320w.jpg 320w, /img/${id}-480w.jpg 480w, /img/${id}-800w.jpg 800w`;
             el.sizes = "(max-width: 320px) 280px,(max-width: 480px) 440px,800px";
-            el.src = el.getAttribute('data-src');
             el.classList.add('fade-in');
         }
     }); // lazy loads elements with default selector as '.lozad'

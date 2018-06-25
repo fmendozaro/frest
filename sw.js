@@ -1,9 +1,5 @@
 "use strict";
 
-window.addEventListener('offline', function(e) { toastr.error('Went offline'); });
-
-window.addEventListener('online', function(e) { toastr.success('Back online'); });
-
 let staticCacheName = 'frest-v1';
 let contentImgsCache = 'frest-content-imgs';
 let allCaches = [
@@ -19,16 +15,39 @@ self.addEventListener('install', event => {
             '/index.html',
             '/restaurant.html',
             '/css/styles.css',
-            '/img/1.jpg',
-            '/img/2.jpg',
-            '/img/3.jpg',
-            '/img/4.jpg',
-            '/img/5.jpg',
-            '/img/6.jpg',
-            '/img/7.jpg',
-            '/img/8.jpg',
-            '/img/9.jpg',
-            '/img/10.jpg',
+            '/img/1-320w.jpg',
+            '/img/1-480w.jpg',
+            '/img/1-800w.jpg',
+            '/img/2-320w.jpg',
+            '/img/2-480w.jpg',
+            '/img/2-800w.jpg',
+            '/img/3-320w.jpg',
+            '/img/3-480w.jpg',
+            '/img/3-800w.jpg',
+            '/img/4-320w.jpg',
+            '/img/4-480w.jpg',
+            '/img/4-800w.jpg',
+            '/img/5-320w.jpg',
+            '/img/5-480w.jpg',
+            '/img/5-800w.jpg',
+            '/img/6-320w.jpg',
+            '/img/6-480w.jpg',
+            '/img/6-800w.jpg',
+            '/img/7-320w.jpg',
+            '/img/7-480w.jpg',
+            '/img/7-800w.jpg',
+            '/img/8-320w.jpg',
+            '/img/8-480w.jpg',
+            '/img/8-800w.jpg',
+            '/img/9-320w.jpg',
+            '/img/9-480w.jpg',
+            '/img/9-800w.jpg',
+            '/img/10-320w.jpg',
+            '/img/10-480w.jpg',
+            '/img/10-800w.jpg',
+            '/img/map-placeholder-320w.jpg',
+            '/img/map-placeholder-480w.jpg',
+            '/img/map-placeholder-800w.jpg',
             '/img/bull.png',
             '/img/favicon.ico',
             '/img/placeholder.png',
@@ -45,6 +64,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', function (event) {
+
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             console.log('activated');
