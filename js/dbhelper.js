@@ -22,7 +22,7 @@ export class DBHelper {
     /**
      * Fetch all restaurants.
      */
-    static fetchRestaurants(callbackArray, overlay) {
+    static fetchRestaurants(callbackArray) {
 
         idb.selectAll( restaurants => {
             if(restaurants === undefined){
@@ -40,7 +40,6 @@ export class DBHelper {
                     fx();
                 });
             }
-            overlay.remove();
         });
     }
 

@@ -2,6 +2,7 @@
 // necessary for webpack
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
     mode: 'development',
@@ -16,7 +17,14 @@ module.exports = {
         filename: '[name]_bundle.js'
     },
     plugins: [
-        new UglifyJsPlugin()
+        new UglifyJsPlugin(),
+        new CompressionPlugin({
+                asset: "[path].gz[query]",
+                algorithm: "gzip",
+                test: /\.js$|\.css$|\.html$/,
+                threshold: 10240,
+                minRatio: 0.8
+            })
     ],
     // babel config
     module: {
@@ -33,6 +41,11 @@ module.exports = {
                         presets: ['env']
                     }
                 }
+            },
+            {
+                test: /\.css/,
+                loaders: ['style-loader', 'css-loader'],
+                include: __dirname + '/css'
             }
         ]
     },

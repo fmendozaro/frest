@@ -1,5 +1,6 @@
 import {DBHelper} from './dbhelper.js';
 import lozad from 'lozad';
+import styles from '../css/styles.css'
 
 self.markers = [];
 let imageCount = 0;
@@ -10,8 +11,7 @@ let observer;
  */
 document.addEventListener('DOMContentLoaded', (event) => {
     // Fetches
-    let overlay = document.querySelector('#overlay');
-    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap], overlay);
+    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
     DBHelper.checkPendingRequests();
 });
 
