@@ -9,6 +9,18 @@ import idb from './main-idb.js';
 window.addEventListener('offline', function(e) { toastr.error('Went offline'); });
 window.addEventListener('online', function(e) { toastr.success('Back online'); });
 
+const toastr = {
+    success: (msg) => {
+        console.log(msg);
+    },
+    warning: (msg) => {
+        console.info(msg);
+    },
+    error: (msg) => {
+        console.error(msg);
+    }
+};
+
 export class DBHelper {
 
     /**

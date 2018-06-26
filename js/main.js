@@ -260,6 +260,7 @@ let loadDeferredStyles = () => {
     document.body.appendChild(replacement);
     addStylesNode.parentElement.removeChild(addStylesNode);
 };
+
 let raf = window.requestAnimationFrame
     || window.mozRequestAnimationFrame
     || window.webkitRequestAnimationFrame

@@ -222,12 +222,11 @@ submitReviewBtn.addEventListener('click', (e) => {
     modal.style.display = 'block';
 
     DBHelper.insertReview(data, (res) => {
-        // Hide/close the modal
+        // Hide or close the modal
         modal.style.display = 'none';
         console.log('insertReview', res);
         if(res === null){
             let ul = document.getElementById('reviews-list');
-            data.name += ' [Offline review]';
             data.createdAt = new Date().toLocaleDateString();
             ul.appendChild(createReviewHTML(data));
         }else{
