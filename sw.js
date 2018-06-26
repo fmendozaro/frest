@@ -14,7 +14,6 @@ self.addEventListener('install', event => {
             '.',
             '/index.html',
             '/restaurant.html',
-            '/css/styles.css',
             '/img/1-320w.jpg',
             '/img/1-480w.jpg',
             '/img/1-800w.jpg',
@@ -51,10 +50,8 @@ self.addEventListener('install', event => {
             '/img/bull.png',
             '/img/favicon.ico',
             '/img/placeholder.png',
-            '/img/map-placeholder.jpg',
             '/dist/index_bundle.js',
             '/dist/info_bundle.js',
-            '/vendor/sweetalert.min.js',
             '/vendor/jquery-3.3.1.min.js',
             '/vendor/toastr.min.css',
             '/vendor/toastr.min.js'
