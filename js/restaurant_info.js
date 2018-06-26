@@ -1,4 +1,5 @@
 import {DBHelper} from './dbhelper.js';
+import styles from '../css/styles.css';
 
 let restaurant, map;
 

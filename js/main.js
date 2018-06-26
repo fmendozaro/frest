@@ -1,6 +1,6 @@
 import {DBHelper} from './dbhelper.js';
 import lozad from 'lozad';
-import styles from '../css/styles.css'
+import styles from '../css/styles.css';
 
 self.markers = [];
 let imageCount = 0;
