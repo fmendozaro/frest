@@ -71,8 +71,10 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
 
     const image = document.getElementById('restaurant-img');
     image.className = 'restaurant-img';
-    image.src = DBHelper.imageUrlForRestaurant(restaurant);
-    image.alt = "restaurant main image";
+    image.alt = restaurant.name  + "'s restaurant image";
+    image.srcset = `/img/${restaurant.id}-320w.jpg 320w, /img/${restaurant.id}-480w.jpg 480w, /img/${restaurant.id}-800w.jpg 800w`;
+    image.sizes = "(max-width: 320px) 280px,(max-width: 480px) 440px,800px";
+    image.classList.add('fade-in');
 
     const cuisine = document.getElementById('restaurant-cuisine');
     cuisine.innerHTML = restaurant.cuisine_type;
