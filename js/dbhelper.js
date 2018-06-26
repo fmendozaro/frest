@@ -23,7 +23,6 @@ export class DBHelper {
      * Fetch all restaurants.
      */
     static fetchRestaurants(callbackArray) {
-
         idb.selectAll( restaurants => {
             if(restaurants === undefined){
                 fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
@@ -33,7 +32,7 @@ export class DBHelper {
                             fx();
                         });
                     }).catch(e => {
-                        toastr.error(`Error getting the list of restaurants ${e}`);
+                        toastr.error(`Error getting the list of restaurants DBHELPER ${e}`);
                 });
             }else{
                 callbackArray.forEach( fx => {

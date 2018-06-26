@@ -205,7 +205,7 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
 
 if (navigator.serviceWorker) {
     navigator.serviceWorker.register('sw.js').then((reg) => {
-        console.log('ServiceWorker registered', reg);
+        console.log('ServiceWorker registered');
     }).catch((e) => {
         console.log('ServiceWorker not registered', e);
     });
@@ -250,3 +250,22 @@ function addEventsToHTML() {
         // document.querySelector('#map-container').style.height = (isVisible) ? '400px':'0';
     });
 }
+
+// Non-critical CSS rendering
+
+let loadDeferredStyles = () => {
+    let addStylesNode = document.getElementById("deferred-styles");
+    let replacement = document.createElement("div");
+    replacement.innerHTML = addStylesNode.textContent;
+    document.body.appendChild(replacement);
+    addStylesNode.parentElement.removeChild(addStylesNode);
+};
+let raf = window.requestAnimationFrame
+    || window.mozRequestAnimationFrame
+    || window.webkitRequestAnimationFrame
+    || window.msRequestAnimationFrame;
+
+if (raf)
+    raf(() => { window.setTimeout(loadDeferredStyles, 0); });
+else
+    window.addEventListener('load', loadDeferredStyles);

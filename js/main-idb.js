@@ -34,7 +34,7 @@ const getPendingRequests = (callback) => {
     dbPromise.then(db => {
         return db.transaction('keyval').objectStore('keyval').get('pending_request');
     }).then(obj => {
-        if(obj)
+        if(obj !== undefined)
             callback(obj);
     }).catch( e => {
         toastr.error(`Error getting the list of Pending Requests from DB ${e}`);
