@@ -18,78 +18,79 @@
 </head>
 
 <div class="inside container">
-<!-- Beginning header -->
-<header role="banner">
-    <!-- Beginning nav -->
-    <nav tabindex="0">
-        <h1 tabindex="0" role="heading">
-            <a tabindex="0" href="/">Frest - Restaurant Reviews</a>
-        </h1>
-    </nav>
-    <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" role="menu">
-        <li><a href="/">Home</a></li>
-    </ul>
-    <!-- End breadcrumb -->
-    <!-- End nav -->
-</header>
-<!-- End header -->
+    <!-- Beginning header -->
+    <header role="banner">
+        <!-- Beginning nav -->
+        <nav tabindex="0">
+            <h1 tabindex="0" role="heading">
+                <a tabindex="0" href="/">Frest - Restaurant Reviews</a>
+            </h1>
+        </nav>
+        <!-- Beginning breadcrumb -->
+        <ul id="breadcrumb" role="menu">
+            <li><a href="/">Home</a></li>
+        </ul>
+        <!-- End breadcrumb -->
+        <!-- End nav -->
+    </header>
+    <!-- End header -->
 
-<!-- Beginning main -->
-<main id="main-content" role="main">
-    <!-- Beginning map -->
-    <section tabindex="-1" id="map-container" aria-label="google-map">
-        <div tabindex="0" id="map"></div>
-    </section>
-    <!-- End map -->
-    <!-- Beginning restaurant -->
-    <section id="restaurant-container" role="feed">
-        <h1 id="restaurant-name"></h1>
-        <img class="responsive-img" id="restaurant-img" alt="restaurant image">
-        <p id="restaurant-cuisine"></p>
-        <p id="restaurant-address"></p>
-        <table id="restaurant-hours"></table>
-    </section>
-    <!-- end restaurant -->
-    <!-- Beginning reviews -->
-    <section id="reviews-container" role="feed">
-        <h2>Reviews</h2>
-        <div class="add-review-wrap">
-            <button id="addReview" class="add-review" role="button">Add review</button>
+    <!-- Beginning main -->
+    <main id="main-content" role="main">
+        <!-- Beginning map -->
+        <section tabindex="-1" id="map-container" aria-label="google-map">
+            <div tabindex="0" id="map"></div>
+        </section>
+        <!-- End map -->
+        <!-- Beginning restaurant -->
+        <section id="restaurant-container" role="feed">
+            <h1 id="restaurant-name"></h1>
+            <img class="responsive-img lozad" id="restaurant-img" alt="restaurant image">
+            <p id="restaurant-cuisine"></p>
+            <p id="restaurant-address"></p>
+            <table id="restaurant-hours"></table>
+        </section>
+        <!-- end restaurant -->
+        <!-- Beginning reviews -->
+        <section id="reviews-container" role="feed">
+            <h2>Reviews</h2>
+            <div class="add-review-wrap">
+                <button id="addReview" class="add-review" role="button">Add review</button>
+            </div>
+            <ul id="reviews-list"></ul>
+        </section>
+        <!-- End reviews -->
+    </main>
+    <!-- End main -->
+
+    <!-- Beginning footer -->
+    <footer id="footer" role="contentinfo">
+        Copyright (c) 2018 <a href="/"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
+    </footer>
+    <!-- End footer -->
+
+    <div id="myModal" class="modal hidden">
+        <div class="form-wrap modal-content">
+            <span class="close">&times;</span>
+            <form id="add-review-form" action="" method="post" role="form">
+                <h3>Let us know your comments</h3>
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name">
+                <br>
+                <label>Rating</label>
+                <input type="radio" name="rating" class="rating" value="1"> 1
+                <input type="radio" name="rating" class="rating"  value="2"> 2
+                <input type="radio" name="rating" class="rating"  value="3"> 3
+                <input type="radio" name="rating" class="rating"  value="4"> 4
+                <input type="radio" name="rating" class="rating"  value="5"> 5
+                <br>
+                <label for="comments">Comments</label>
+                <br>
+                <textarea name="comments" id="comments" cols="50" rows="10"></textarea>
+                <br>
+                <button id="submit-review" role="button">Submit</button>
+            </form>
         </div>
-        <ul id="reviews-list"></ul>
-    </section>
-    <!-- End reviews -->
-</main>
-<!-- End main -->
-
-<!-- Beginning footer -->
-<footer id="footer" role="contentinfo">
-    Copyright (c) 2018 <a href="/"><strong>Frest - Restaurant Reviews</strong></a> All Rights Reserved.
-</footer>
-<!-- End footer -->
-
-<div id="myModal" class="modal hidden">
-    <div class="form-wrap modal-content">
-        <span class="close">&times;</span>
-        <form id="add-review-form" action="" method="post" role="form">
-            <h3>Let us know your comments</h3>
-            <label for="name">Name</label>
-            <input id="name" type="text" name="name">
-            <br>
-            <label>Rating</label>
-            <input type="radio" name="rating" class="rating" value="1"> 1
-            <input type="radio" name="rating" class="rating"  value="2"> 2
-            <input type="radio" name="rating" class="rating"  value="3"> 3
-            <input type="radio" name="rating" class="rating"  value="4"> 4
-            <input type="radio" name="rating" class="rating"  value="5"> 5
-            <br>
-            <label for="comments">Comments</label>
-            <br>
-            <textarea name="comments" id="comments" cols="50" rows="10"></textarea>
-            <br>
-            <button id="submit-review" role="button">Submit</button>
-        </form>
     </div>
 </div>
 
@@ -101,7 +102,7 @@
         crossorigin=""></script>
 <!-- End scripts -->
 <script type="application/javascript" charset="utf-8" src="/dist/info_bundle.js"></script>
-<script type="application/javascript" charset="utf-8" src="sw.js"></script>
-</body>
+<script type="application/javascript" charset="utf-8" src="/sw.js"></script>
 
+</body>
 </html>

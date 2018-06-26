@@ -3,8 +3,8 @@
 let staticCacheName = 'frest-v1';
 let contentImgsCache = 'frest-content-imgs';
 let allCaches = [
-    staticCacheName,
-    contentImgsCache
+  staticCacheName,
+  contentImgsCache
 ];
 
 self.addEventListener('install', event => {
