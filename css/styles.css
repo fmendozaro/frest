@@ -12,9 +12,26 @@
     }
 }
 
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
 .fade-in{
     animation-name: fadeIn;
     animation-duration: 1.5s;
+}
+
+.fade-out{
+    animation-name: fadeOut;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 /* End animations */

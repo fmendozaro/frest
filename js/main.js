@@ -80,13 +80,14 @@ let initMap = () => {
         lng:-73.987501
     };
 
-    self.map = L.map('map').setView(loc, 12);
+    self.map = new L.map('map').on('load', function(e) {
+        document.getElementById('map-placeholder').className = 'fade-out';
+    }).setView(loc, 12);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
         id: 'mapbox.streets'
     }).addTo(self.map);
-    document.getElementById('map-placeholder').remove();
 };
 
 /**
