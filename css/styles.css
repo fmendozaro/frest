@@ -205,12 +205,6 @@ nav h1 a {
     width: 100%;
 }
 
-#show-map {
-    order: 0;
-    border: none;
-    margin: 5px 0;
-}
-
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
     display: flex;

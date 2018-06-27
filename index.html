@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#3397DB">
     <meta name="description" content="The best place to review your fav places"/>
     <!-- FB -->
@@ -21,7 +21,7 @@
     <!--Critical Rendering Path-->
     <style>
         #map-container {
-            visibility: hidden;
+            height: 40vh;
         }
     </style>
 </head>
@@ -37,8 +37,9 @@
 </header>
 
 <main id="main-content" role="main">
-    <button id="show-map" aria-label="Button to show the map" class="app-btn">Show map</button>
+    <!--<button id="show-map" aria-label="Button to show the map" class="app-btn">Show map</button>-->
     <section id="map-container" class="row" aria-label="google-map">
+        <img id="map-placeholder" srcset="/img/map-placeholder-320w.jpg 320w, /img/map-placeholder-480w.jpg 480w, /img/map-placeholder-800w.jpg 800w" sizes="(max-width: 320px) 280px,(max-width: 480px) 440px,800px" alt="placeholder image for the map" aria-placeholder="map">
         <div tabindex="0" id="map"></div>
     </section>
     <section>

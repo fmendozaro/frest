@@ -86,6 +86,7 @@ let initMap = () => {
         maxZoom: 18,
         id: 'mapbox.streets'
     }).addTo(self.map);
+    document.getElementById('map-placeholder').remove();
 };
 
 /**
@@ -236,17 +237,6 @@ function addEventsToHTML() {
                 el.innerHTML = (curFav) ? '★': '☆';
             });
         })
-    });
-
-    let showMap = document.querySelector('#show-map');
-    let map = document.querySelector('#map-container');
-    showMap.addEventListener('click', (e) => {
-        e.preventDefault();
-        let isVisible = (map.style.visibility === 'hidden');
-        showMap.innerText = (!isVisible) ? 'Show map' : 'Hide map';
-        map.style.visibility = (isVisible) ? 'visible':'hidden';
-        document.querySelector('#map').style.height = (isVisible) ? '40vh':'0';
-        // document.querySelector('#map-container').style.height = (isVisible) ? '400px':'0';
     });
 }
 
