@@ -153,8 +153,7 @@ let createRestaurantHTML = (restaurant) => {
 
     const favBtn = document.createElement('a');
     let curFav = restaurant.is_favorite == 'true';
-    let star = (curFav) ? '★': '☆';
-    favBtn.innerHTML = star;
+    favBtn.innerHTML = (curFav) ? '★': '☆';
     favBtn.className = 'fav-btn';
     favBtn.href = '#';
     favBtn.setAttribute('data-url', '/restaurants/'+ restaurant.id +'/?is_favorite='+ (!curFav));

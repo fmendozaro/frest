@@ -6,10 +6,15 @@ import idb from './main-idb.js';
  * Common database helper functions.
  */
 
+let isOnline=true;
+
 window.addEventListener('offline', e => {
+    isOnline=false;
     toastr.error('Went offline');
 });
+
 window.addEventListener('online', e => {
+    isOnline=true;
     toastr.success('Back online');
     this.checkPendingRequests();
 });
@@ -40,8 +45,13 @@ export class DBHelper {
      * Fetch all restaurants.
      */
     static fetchRestaurants(callbackArray) {
+        console.log('isOnline', isOnline);
         idb.selectAll( restaurants => {
-            if(restaurants === undefined){
+            if(restaurants === undefined || isOnline){
+
+                if(isOnline)
+                    idb.removeKey('restaurants');
+
                 fetch(this.DATABASE_URL+'/restaurants').then(response => response.json())
                     .then(restaurants => {
                         idb.insert('restaurants', restaurants);
