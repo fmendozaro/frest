@@ -18,7 +18,6 @@
     }
     to {
         opacity: 0;
-        visibility: hidden;
     }
 }
 
@@ -32,6 +31,7 @@
     animation-duration: 1.5s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    visibility: hidden;
 }
 
 /* End animations */
