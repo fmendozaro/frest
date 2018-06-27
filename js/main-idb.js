@@ -16,7 +16,7 @@ const insert = (key, val) => {
         // console.log('Added', key);
         // console.log('to', val);
     }).catch(e => {
-        toastr.error(`Error inserting the list of restaurants in DB ${e}`);
+        console.error(`Error inserting the list of restaurants in DB ${e}`);
     });
 };
 
@@ -26,7 +26,7 @@ const selectAll = (callback) => {
     }).then(restaurants => {
         callback(restaurants);
     }).catch( e => {
-        toastr.error(`Error getting the list of restaurants from DB ${e}`);
+        console.error(`Error getting the list of restaurants from DB ${e}`);
     });
 };
 
@@ -37,7 +37,7 @@ const getPendingRequests = (callback) => {
         if(obj !== undefined)
             callback(obj);
     }).catch( e => {
-        toastr.error(`Error getting the list of Pending Requests from DB ${e}`);
+        console.error(`Error getting the list of Pending Requests from DB ${e}`);
     });
 };
 

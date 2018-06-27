@@ -6,8 +6,13 @@ import idb from './main-idb.js';
  * Common database helper functions.
  */
 
-window.addEventListener('offline', function(e) { toastr.error('Went offline'); });
-window.addEventListener('online', function(e) { toastr.success('Back online'); });
+window.addEventListener('offline', e => {
+    toastr.error('Went offline');
+});
+window.addEventListener('online', e => {
+    toastr.success('Back online');
+    this.checkPendingRequests();
+});
 
 const toastr = {
     success: (msg) => {

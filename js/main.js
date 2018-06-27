@@ -246,7 +246,7 @@ function addEventsToHTML() {
         let isVisible = (map.style.visibility === 'hidden');
         showMap.innerText = (!isVisible) ? 'Show map' : 'Hide map';
         map.style.visibility = (isVisible) ? 'visible':'hidden';
-        document.querySelector('#map').style.height = (isVisible) ? '400px':'0';
+        document.querySelector('#map').style.height = (isVisible) ? '40vh':'0';
         // document.querySelector('#map-container').style.height = (isVisible) ? '400px':'0';
     });
 }
