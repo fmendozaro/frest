@@ -51,7 +51,8 @@ self.addEventListener('install', event => {
             '/img/favicon.ico',
             '/img/placeholder.png',
             '/dist/index_bundle.js',
-            '/dist/info_bundle.js'
+            '/dist/info_bundle.js',
+            '/node_modules/toastr/build/toastr.min.js'
         ]);
     })
 

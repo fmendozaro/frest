@@ -19,18 +19,6 @@ window.addEventListener('online', e => {
     this.checkPendingRequests();
 });
 
-const toastr = {
-    success: (msg) => {
-        console.log(msg);
-    },
-    warning: (msg) => {
-        console.info(msg);
-    },
-    error: (msg) => {
-        console.error(msg);
-    }
-};
-
 export class DBHelper {
 
     /**

@@ -1,3 +1,5 @@
+"use strict";
+
 import {DBHelper} from './dbhelper.js';
 import lozad from 'lozad';
 import styles from '../css/styles.css';
