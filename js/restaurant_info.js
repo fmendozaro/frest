@@ -15,16 +15,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 let initMap = () => {
     fetchRestaurantFromURL((error, restaurant) => {
         if (error) { // Got an error!
-            console.log(error);
+            toastr.error(error);
         } else {
-
-            let loc = {
-                lat: 40.722216,
-                lng:-73.987501
-            };
-
-            self.map = map = L.map('map').setView(loc, 12);
-
+            self.map = map = L.map('map').setView(restaurant.latlng, 12);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 18,
                 id: 'mapbox.streets'
