@@ -6,15 +6,21 @@ import styles from '../css/styles.css';
 
 self.markers = [];
 let imageCount = 0;
-let observer;
+let observer, map;
+let location = {
+    lat: 40.722216,
+    lng:-73.987501
+};
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
     // Fetches
-    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants, initMap]);
+    DBHelper.fetchRestaurants([fetchNeighborhoods, fetchCuisines, updateRestaurants]);
+    initMap();
     DBHelper.checkPendingRequests();
+
 });
 
 /**
@@ -76,22 +82,11 @@ let fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize map, called from HTML.
  */
 let initMap = () => {
-
-    let location = {
-        lat: 40.722216,
-        lng:-73.987501
-    };
-
-    self.map = new L.map('map').on('load', function(e) {
-        let ph = document.getElementById('map-placeholder');
-        ph.className = 'fade-out';
-        ph.style.display = 'none';
-    }).setView(location, 13);
-
+    self.map = map = new L.map('map').setView(location, 12);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
         id: 'mapbox.streets'
-    }).addTo(self.map);
+    }).addTo(map);
 };
 
 /**
