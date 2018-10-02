@@ -250,6 +250,12 @@ let loadDeferredStyles = () => {
     addStylesNode.parentElement.removeChild(addStylesNode);
 };
 
+let showLoading = () => {
+    let overlay = document.createElement('div');
+    overlay.className = 'loader';
+    overlay.createTextNode('Loading...');
+};
+
 let raf = window.requestAnimationFrame
     || window.mozRequestAnimationFrame
     || window.webkitRequestAnimationFrame

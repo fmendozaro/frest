@@ -185,9 +185,10 @@ export class DBHelper {
         }).then( response => response.json())
             .then( res => {
                 callback(res);
-                toastr.success('Changes saved');
+                let msg = (res.is_favorite == 'true') ? 'Saved as favorite' : 'Removed from favorites';
+                toastr.success(msg);
             }).catch( error => {
-                toastr.error('An error occurred while trying to fav a restaurant', error);
+                toastr.error('An error occurred while trying to favorite a restaurant', error);
                 //idb.insert('pending_request', data);
         });
     }
