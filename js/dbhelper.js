@@ -10,12 +10,12 @@ let isOnline=true;
 
 window.addEventListener('offline', e => {
     isOnline=false;
-    toastr.error('Went offline');
+    toastr.error('Lost Connection');
 });
 
 window.addEventListener('online', e => {
     isOnline=true;
-    toastr.success('Back online');
+    toastr.success('You\'re back online');
     this.checkPendingRequests();
 });
 
@@ -171,7 +171,6 @@ export class DBHelper {
 
     static checkPendingRequests(){
         idb.getPendingRequests( pendingReview => {
-            console.log('pendingReview', pendingReview);
             this.insertReview(pendingReview, () => {
                 toastr.success('Pending offline request posted');
                 idb.removeKey('pending_request');
