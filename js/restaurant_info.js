@@ -218,7 +218,6 @@ submitReviewBtn.addEventListener('click', (e) => {
     DBHelper.insertReview(data, (res) => {
         // Hide or close the modal
         modal.style.display = 'none';
-        console.log('insertReview', res);
         if(res === null){
             let ul = document.getElementById('reviews-list');
             data.createdAt = new Date().toLocaleDateString();
