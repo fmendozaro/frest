@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<img id="rest" >
+
+<script>
+    /* If you're feeling fancy you can add interactivity
+    to your site with Javascript */
+
+    // var url = 'https://www.guidedogs.org/wp-content/uploads/2015/05/Puppy1-edit-1900x500.jpg';
+    var url = '/img/1-320w.jpg';
+    var headers = new Headers({
+        'Access-Control-Allow-Origin': '*'
+    });
+    var options = {
+        method: 'GET',
+        headers: headers,
+        mode: 'cors',
+        cache: 'default'
+    };
+
+    fetch(url, options)
+        .then((response) => {response.blob()
+            .then((imgBlob) => {
+                document.querySelector('#rest').src = URL.createObjectURL(imgBlob);
+        });
+    });
+
+</script>
+
+</body>
+</html>
