@@ -14,5 +14,6 @@ A progressive web app (PWA) created following a udacity.com course.
 
 ### Production site
 
-- [Firebase site](https://udacity-mws-1524959693928.firebaseapp.com/)
+- [Staging](https://udacity-mws-1524959693928.firebaseapp.com)
+- [Production](https://frest.fer-mendoza.com)
 - [REST server](https://frest.glitch.me/restaurants)
