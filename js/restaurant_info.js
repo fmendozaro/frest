@@ -1,5 +1,6 @@
 import {DBHelper} from './dbhelper.js';
 import styles from '../css/styles.css';
+import keys from './keys'
 
 let restaurant, map;
 
@@ -18,7 +19,7 @@ let initMap = () => {
             toastr.error(error);
         } else {
             self.map = map = L.map('map').setView(restaurant.latlng, 12);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${keys.MAPBOX_API}`, {
                 maxZoom: 18,
                 id: 'mapbox.streets'
             }).addTo(map);

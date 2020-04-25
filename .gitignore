@@ -8,3 +8,4 @@ bundle.js
 node_modules
 dist
 .DS_Store
+keys.js
